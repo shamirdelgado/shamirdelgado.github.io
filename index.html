@@ -16,7 +16,7 @@
   <!-- Esto hace que la página se vea bien en celular -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shamir Delgado | Portafolio</title>
-  <meta name="description" content="Estudiante de Ingeniería de Sistemas en Costa Rica. Python, desarrollo web y seguridad informática.">
+  <meta name="description" content="Portafolio de Shamir Delgado: desarrollo full-stack, proyectos web y reparación de hardware.">
   <link rel="icon" href="img/icon.png">
 
   <!-- Este mini-script va en el <head> a propósito: elige el tema ANTES de pintar la página, para que no parpadee.
@@ -216,6 +216,22 @@
     .about { max-width: 40rem; }
     .about p { margin: 0 0 1rem; }
 
+    /* Separación de enlaces y skills compactas. */
+    .project p.project-links { margin-top: 1.25rem; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
+    .project-links .btn { margin: 0; }
+    .skills.tags { grid-template-columns: repeat(auto-fit, minmax(8.75rem, 1fr)); gap: .9rem; max-width: 54rem; }
+    .skills.tags > span { display: flex; align-items: center; justify-content: flex-start; gap: .5rem; min-height: 48px; min-width: 0; padding: .6rem .7rem; border-radius: .6rem; }
+    .skills.tags b { font-size: .82rem; line-height: 1.3; font-weight: 600; overflow-wrap: anywhere; }
+    .skills.tags .hardware-skill b { font-size: .75rem; }
+    .skill-logo { display: block; flex-shrink: 0; width: 28px; height: 28px; object-fit: contain; padding: 3px; border-radius: .35rem; background: var(--bg); }
+    html[data-theme="night"] .skill-logo { background: var(--ink); }
+    .skills.tags .skill-logos { display: flex; gap: 2px; padding: 0; border: 0; background: none; border-radius: 0; }
+    .skill-logos .skill-logo { width: 18px; height: 18px; padding: 1px; }
+    @media (max-width: 30rem) {
+      .skills.tags { gap: .75rem; }
+      .skills.tags > span { padding: .5rem; }
+    }
+
     /* ---------- 7. Contacto y pie ---------- */
     .contact-links { display: flex; flex-wrap: wrap; gap: .75rem; }
     footer { padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; border-top: 1px solid var(--line); }
@@ -226,6 +242,61 @@
       .card { transition: none; animation: none; }
       .skill-inner, .theme .knob, body { transition: none; }
     }
+
+
+    /* Detalles Pokémon: mismo tema, imágenes locales y movimiento corto. */
+    .theme .knob { width: 1.7rem; height: 1.7rem; margin-top: -.85rem; left: 0; background: transparent; }
+    html[data-theme="night"] .theme .knob { left: calc(100% - 1.7rem); }
+    .theme .knob img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+    .card-foot { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; min-height: 32px; }
+    .masterball { justify-self: center; width: 30px; height: 30px; object-fit: contain; border-radius: 50%; }
+    .skills.tags > span { transition: transform .18s, background .18s, color .18s, border-color .18s; }
+    .skills.tags > span:hover, .skills.tags > span:focus-visible { transform: scale(1.035); background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .contact-links .btn { display: inline-flex; align-items: center; gap: .5rem; }
+    .contact-icon { flex-shrink: 0; width: 18px; height: 18px; }
+    .logo-badge { padding: 2px; border-radius: .2rem; background: var(--bg); }
+    html[data-theme="night"] .logo-badge { background: var(--ink); }
+    .bg .sprite-sheet { position: absolute; top: 0; width: var(--s); height: var(--s); opacity: .18; will-change: transform; }
+    .pose-window { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
+    .pose-window img { position: absolute; max-width: none; height: auto; opacity: 1; image-rendering: auto; filter: url(#pokemon-remove-black); }
+    .pose-haunter img { width: 428%; left: -17%; top: -11%; }
+    .pose-gastly img { width: 487%; left: -360%; top: -21%; }
+    .pose-gengar img { width: 367%; left: -214%; top: -98%; }
+    @media (max-width: 480px) { .bg .sprite-sheet { opacity: .12; } }
+    @media (prefers-reduced-motion: reduce) {
+      .skills.tags > span { transition: none; }
+      .skills.tags > span:hover, .skills.tags > span:focus-visible { transform: none; }
+    }
+
+
+    /* GIFs del saludo, carta y cursor. Los archivos originales no se modifican. */
+    .hero-greeting { display: flex; align-items: center; gap: .5rem; margin-bottom: 1.25rem; }
+    .hero-greeting h1 { flex: 1; min-width: 0; margin-bottom: 0; }
+    .greeting-pokemon { display: block; flex-shrink: 0; width: 100px; }
+    .greeting-pokemon img { display: block; width: 100%; height: auto; object-fit: contain; }
+    .card-pokemon { display: block; justify-self: center; width: 44px; height: 44px; }
+    .spin-animated { display: block; width: 44px; height: 44px; object-fit: contain; image-rendering: pixelated; }
+    .spin-static { display: none; }
+    .gif-cursor[hidden] { display: none; }
+    .gif-cursor { position: fixed; left: 0; top: 0; width: 48px; height: 40px; z-index: 200; pointer-events: none; will-change: transform; }
+    .gif-cursor img { display: block; width: 100%; height: 100%; object-fit: contain; filter: url(#pokemon-remove-white); }
+    .gif-cursor.is-grabbing img { transform: scale(.9); }
+    html.gif-cursor-active, html.gif-cursor-active * { cursor: none !important; }
+    @media (max-width: 480px) { .greeting-pokemon { width: 76px; } }
+    @media (prefers-reduced-motion: reduce) {
+      .spin-animated { display: none; }
+      .spin-static { display: block; }
+      .gif-cursor { display: none !important; }
+    }
+
+
+    /* GIFs junto al título y antes del texto del footer. */
+    .about-heading { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.5rem; }
+    .about-heading h2 { margin-bottom: 0; }
+    .about-heading picture { display: block; flex-shrink: 0; }
+    .about-heading img { display: block; width: 60px; height: 60px; object-fit: contain; }
+    .footer-pokemon { display: block; width: 72px; margin-bottom: .75rem; }
+    .footer-pokemon img { display: block; width: 72px; height: 81px; object-fit: contain; }
   </style>
 </head>
 
@@ -245,7 +316,7 @@
         <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
         <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
         <button class="lang" id="langBtn" type="button" aria-label="Change language">EN</button>
-        <button class="theme" id="themeBtn" type="button" role="switch" aria-checked="false" aria-label="Tema día / noche"><span class="knob" id="knob">☀️</span></button>
+        <button class="theme" id="themeBtn" type="button" role="switch" aria-checked="false" aria-label="Tema día / noche"><span class="knob" id="knob"><img id="themeBall" src="img/honorball.png" width="28" height="28" alt="" aria-hidden="true"></span></button>
       </nav>
     </header>
 
@@ -254,13 +325,16 @@
       <!-- ========== HERO ========== -->
       <div class="hero">
         <div>
-          <h1 data-es="Hola, soy Shamir." data-en="Hi, I'm Shamir.">Hola, soy Shamir.</h1>
-          <p data-es="Estudiante de Ingeniería de Sistemas en Costa Rica. Aprendo y construyo con Python y desarrollo web, y me interesa la seguridad informática."
-             data-en="Systems Engineering student from Costa Rica. I learn and build with Python and web development, and I'm interested in cybersecurity.">
-            Estudiante de Ingeniería de Sistemas en Costa Rica. Aprendo y construyo con Python y desarrollo web, y me interesa la seguridad informática.
+          <div class="hero-greeting">
+            <h1 data-es="Hola, soy Shamir." data-en="Hi, I'm Shamir.">Hola, soy Shamir.</h1>
+            <picture class="greeting-pokemon" aria-hidden="true"><source media="(prefers-reduced-motion: reduce)" srcset="img/gastly1.png"><img src="img/tres-evoluciones.gif" alt="" width="100" height="106"></picture>
+          </div>
+          <p data-es="Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo proyectos web y sigo ampliando mis conocimientos en interfaces, APIs y bases de datos."
+             data-en="Systems Engineering student from Costa Rica. I build web projects and continue developing my knowledge of interfaces, APIs and databases.">
+            Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo proyectos web y sigo ampliando mis conocimientos en interfaces, APIs y bases de datos.
           </p>
-          <p class="now" data-es="Ahora: aprendiendo Python, FastAPI y seguridad informática."
-             data-en="Right now: learning Python, FastAPI and cybersecurity.">Ahora: aprendiendo Python, FastAPI y seguridad informática.</p>
+          <p class="now" data-es="Junior Full-Stack Developer · Desarrollo web y reparación de hardware."
+             data-en="Junior Full-Stack Developer · Web development and hardware repair.">Junior Full-Stack Developer · Desarrollo web y reparación de hardware.</p>
           <a class="btn primary" href="#proyectos" data-es="Ver mis proyectos" data-en="See my projects">Ver mis proyectos</a>
           <a class="btn ghost" href="#contacto" data-es="Contactame" data-en="Get in touch">Contactame</a>
         </div>
@@ -274,9 +348,9 @@
               <ul class="stats">
                 <li><span data-es="Lenguajes" data-en="Languages">Lenguajes</span><span>Python, JS, C#</span></li>
                 <li><span data-es="Web" data-en="Web">Web</span><span>HTML, CSS, JS</span></li>
-                <li><span data-es="Idiomas" data-en="Spoken">Idiomas</span><span>ES, EN B2</span></li>
+                <li><span data-es="Idiomas" data-en="Spoken">Idiomas</span><span>ES, EN</span></li>
               </ul>
-              <div class="card-foot">Costa Rica</div>
+              <div class="card-foot"><span>Costa Rica</span><span class="card-pokemon" aria-hidden="true"><img class="spin-animated" src="img/haunter-spin.gif" alt="" width="44" height="44"><span class="spin-static pose-window pose-haunter"><img src="img/pokemon-poses.jpg" alt=""></span></span><span aria-hidden="true"></span></div>
             </div>
           </div>
         </div>
@@ -305,83 +379,84 @@
         </article>
 
         <article class="project">
-          <div class="when" data-es="2024 a 2025" data-en="2024 to 2025">2024 a 2025</div>
+          <div class="when" data-es="2026" data-en="2026">2026</div>
           <div>
             <h3>
-              <span data-es="Sitio web de logística" data-en="Logistics website">Sitio web de logística</span>
-              <span class="status" data-es="Próximamente" data-en="Coming soon">Próximamente</span>
+              <span data-es="Courier Demo" data-en="Courier Demo">Courier Demo</span>
+              <span class="status" data-es="Demo" data-en="Demo">Demo</span>
             </h3>
-            <p data-es="Desarrollé un sitio web orientado a la logística. Pronto voy a agregar más detalles y el enlace."
-               data-en="I built a website focused on logistics. More details and a link are coming soon.">
-              Desarrollé un sitio web orientado a la logística. Pronto voy a agregar más detalles y el enlace.
+            <p data-es="Demo de un casillero de compras con envíos de EE. UU. a Costa Rica. Incluye cotizador, prealerta, rastreo y panel de usuario con datos y funciones simulados."
+               data-en="Demo of a shopping forwarding service from the US to Costa Rica. Includes a shipping estimator, package pre-alerts, tracking and a user dashboard with simulated data and features.">
+              Demo de un casillero de compras con envíos de EE. UU. a Costa Rica. Incluye cotizador, prealerta, rastreo y panel de usuario con datos y funciones simulados.
             </p>
             <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <p class="project-links">
+              <a class="btn primary" href="https://shamirdelgado.github.io/courier-demo/" target="_blank" rel="noopener noreferrer" data-es="Ver demo" data-en="View demo">Ver demo</a>
+              <a class="btn ghost" href="https://github.com/shamirdelgado/courier-demo" target="_blank" rel="noopener noreferrer" data-es="Ver código" data-en="View code">Ver código</a>
+            </p>
           </div>
         </article>
 
         <article class="project">
-          <div class="when" data-es="2026, Ulatina" data-en="2026, Ulatina">2026, Ulatina</div>
+          <div class="when">2026</div>
           <div>
-            <h3 data-es="Proyectos de Programación Orientada a Objetos" data-en="Object-Oriented Programming projects">Proyectos de Programación Orientada a Objetos</h3>
-            <p data-es="Aplicaciones de escritorio con formularios para el curso de POO en la universidad."
-               data-en="Desktop applications with forms for the OOP course at university.">
-              Aplicaciones de escritorio con formularios para el curso de POO en la universidad.
+            <h3>
+              <span data-es="Gestor de finanzas personales" data-en="Personal finance manager">Gestor de finanzas personales</span>
+              <span class="status" data-es="Planificado" data-en="Planned">Planificado</span>
+            </h3>
+            <p data-es="Proyecto planificado para organizar ingresos y gastos, definir presupuestos y consultar un resumen mensual con gráficos, filtros por fecha y exportación a CSV."
+               data-en="Planned project to organize income and expenses, set budgets and view a monthly summary with charts, date filters and CSV export.">
+              Proyecto planificado para organizar ingresos y gastos, definir presupuestos y consultar un resumen mensual con gráficos, filtros por fecha y exportación a CSV.
             </p>
-            <div class="tags"><span>C#</span><span>Windows Forms</span></div>
+            <div class="tags"><span>React</span><span>TypeScript</span><span>Python</span><span>FastAPI</span><span>PostgreSQL</span></div>
           </div>
         </article>
       </section>
 
       <!-- ========== SKILLS ==========
-           Cada <button class="skill"> tiene dos caras: front (adelante) y back (atrás).
-           EDITÁ: agregá o quitá skills copiando un bloque completo. Poné solo lo que de verdad usaste. -->
+           Tecnologías en etiquetas compactas. SQL usa el logo de PostgreSQL. -->
       <section id="skills">
         <h2 data-es="Skills" data-en="Skills">Skills</h2>
-        <div class="skills">
-          <button class="skill" type="button" aria-pressed="false">
-            <span class="skill-inner">
-              <span class="face front"><b>Python</b><small data-es="Lenguaje" data-en="Language">Lenguaje</small></span>
-              <span class="face back" data-es="Mi tracker de cartas: menú en consola con base de datos SQLite." data-en="My card tracker: a console menu backed by an SQLite database.">Mi tracker de cartas: menú en consola con base de datos SQLite.</span>
-            </span>
-          </button>
-          <button class="skill" type="button" aria-pressed="false">
-            <span class="skill-inner">
-              <span class="face front"><b>SQLite</b><small data-es="Base de datos" data-en="Database">Base de datos</small></span>
-              <span class="face back" data-es="Registrar, listar y borrar cartas, y calcular el total de mi colección." data-en="Add, list and delete cards, and calculate my collection's total.">Registrar, listar y borrar cartas, y calcular el total de mi colección.</span>
-            </span>
-          </button>
-          <button class="skill" type="button" aria-pressed="false">
-            <span class="skill-inner">
-              <span class="face front"><b>HTML, CSS, JS</b><small data-es="Web" data-en="Web">Web</small></span>
-              <span class="face back" data-es="Esta página está hecha a mano con los tres, sin plantillas." data-en="This page is handmade with all three, no templates.">Esta página está hecha a mano con los tres, sin plantillas.</span>
-            </span>
-          </button>
-          <button class="skill" type="button" aria-pressed="false">
-            <span class="skill-inner">
-              <span class="face front"><b>C#</b><small data-es="Lenguaje" data-en="Language">Lenguaje</small></span>
-              <span class="face back" data-es="Aplicaciones de escritorio con Windows Forms en el curso de POO." data-en="Desktop apps with Windows Forms in the OOP course.">Aplicaciones de escritorio con Windows Forms en el curso de POO.</span>
-            </span>
-          </button>
-          <button class="skill" type="button" aria-pressed="false">
-            <span class="skill-inner">
-              <span class="face front"><b data-es="Inglés B2" data-en="English B2">Inglés B2</b><small data-es="Idioma" data-en="Language">Idioma</small></span>
-              <span class="face back" data-es="Nivel intermedio-avanzado, para leer documentación y comunicarme." data-en="Upper-intermediate level, for reading documentation and communicating.">Nivel intermedio-avanzado, para leer documentación y comunicarme.</span>
-            </span>
-          </button>
+        <div class="skills tags">
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="Python" loading="lazy" width="28" height="28"><b>Python</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy" width="28" height="28"><b>SQLite</b></span>
+          <span><span class="skill-logos"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg" alt="HTML" loading="lazy" width="28" height="28"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg" alt="CSS" loading="lazy" width="28" height="28"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy" width="28" height="28"></span><b>HTML, CSS, JS</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/csharp/csharp-original.svg" alt="C#" loading="lazy" width="28" height="28"><b>C#</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="TypeScript" loading="lazy" width="28" height="28"><b>TypeScript</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="React" loading="lazy" width="28" height="28"><b>React</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg" alt="FastAPI" loading="lazy" width="28" height="28"><b>FastAPI</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" loading="lazy" width="28" height="28"><b>PostgreSQL</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="SQL" loading="lazy" width="28" height="28"><b>SQL</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" alt="Git" loading="lazy" width="28" height="28"><b>Git</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg" alt="GitHub" loading="lazy" width="28" height="28"><b>GitHub</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" loading="lazy" width="28" height="28"><b>AWS</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="Docker" loading="lazy" width="28" height="28"><b>Docker</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/playwright/playwright-original.svg" alt="Playwright" loading="lazy" width="28" height="28"><b>Playwright</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/pytest/pytest-original.svg" alt="Pytest" loading="lazy" width="28" height="28"><b>Pytest</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg" alt="GitHub Actions" loading="lazy" width="28" height="28"><b>GitHub Actions</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postman/postman-original.svg" alt="Postman" loading="lazy" width="28" height="28"><b>Postman</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg" alt="Linux" loading="lazy" width="28" height="28"><b>Linux</b></span>
+          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/figma/figma-original.svg" alt="Figma" loading="lazy" width="28" height="28"><b>Figma</b></span>
+          <span class="hardware-skill" tabindex="0"><img class="skill-logo" src="img/hardware/celulares.svg" alt="Reparación de celulares" loading="lazy" width="28" height="28"><b data-es="Celulares" data-en="Phones">Celulares</b></span>
+          <span class="hardware-skill" tabindex="0"><img class="skill-logo" src="img/hardware/computadoras.svg" alt="Reparación de computadoras" loading="lazy" width="28" height="28"><b data-es="Computadoras" data-en="Computers">Computadoras</b></span>
+          <span class="hardware-skill" tabindex="0"><img class="skill-logo" src="img/hardware/consolas.svg" alt="Reparación de consolas" loading="lazy" width="28" height="28"><b data-es="Consolas" data-en="Consoles">Consolas</b></span>
         </div>
       </section>
 
       <!-- ========== SOBRE MÍ ========== -->
       <section id="sobre-mi">
-        <h2 data-es="Sobre mí" data-en="About me">Sobre mí</h2>
+        <div class="about-heading">
+          <h2 data-es="Sobre mí" data-en="About me">Sobre mí</h2>
+          <picture aria-hidden="true"><source media="(prefers-reduced-motion: reduce)" srcset="img/gengar1.png"><img src="img/sobre-mi-shiny.gif" alt="" width="60" height="60" loading="lazy"></picture>
+        </div>
         <div class="about">
-          <p data-es="Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Vengo de la reparación de celulares y de la logística aduanera, así que me gusta entender cómo funcionan las cosas por dentro."
-             data-en="I study Systems Engineering at Universidad Latina de Costa Rica. I come from phone repair and customs logistics, so I like understanding how things work on the inside.">
-            Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Vengo de la reparación de celulares y de la logística aduanera, así que me gusta entender cómo funcionan las cosas por dentro.
+          <p data-es="Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi enfoque es conectar interfaces, lógica de aplicación y bases de datos para desarrollar soluciones web completas."
+             data-en="I am Shamir Delgado, a Junior Full-Stack Developer studying Systems Engineering at Universidad Latina de Costa Rica. My focus is connecting interfaces, application logic and databases to build complete web solutions.">
+            Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi enfoque es conectar interfaces, lógica de aplicación y bases de datos para desarrollar soluciones web completas.
           </p>
-          <p data-es="Ahora estoy practicando Python y desarrollo web, y quiero enfocarme en seguridad informática."
-             data-en="Right now I'm practicing Python and web development, and I want to focus on cybersecurity.">
-            Ahora estoy practicando Python y desarrollo web, y quiero enfocarme en seguridad informática.
+          <p data-es="También tengo experiencia real en reparación de celulares, computadoras y consolas. El diagnóstico de fallas y el trabajo con hardware forman parte de mis conocimientos técnicos y de mi manera de resolver problemas."
+             data-en="I also have hands-on experience repairing phones, computers and consoles. Troubleshooting and working with hardware are part of my technical skills and approach to solving problems.">
+            También tengo experiencia real en reparación de celulares, computadoras y consolas. El diagnóstico de fallas y el trabajo con hardware forman parte de mis conocimientos técnicos y de mi manera de resolver problemas.
           </p>
         </div>
       </section>
@@ -391,18 +466,22 @@
       <section id="contacto">
         <h2 data-es="Contacto" data-en="Get in touch">Contacto</h2>
         <div class="contact-links">
-          <a class="btn primary" href="mailto:uzziellanuza@gmail.com">Email</a>
-          <a class="btn ghost" href="https://github.com/shamirdelgado">GitHub</a>
-          <a class="btn ghost" href="https://www.linkedin.com/in/shamir-delgado-lanuza-0b7274314">LinkedIn</a>
+          <a class="btn primary" href="mailto:uzziellanuza@gmail.com"><svg class="contact-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></svg>Email</a>
+          <a class="btn ghost" href="https://github.com/shamirdelgado"><img class="contact-icon logo-badge" src="img/contacto/github.svg" alt="" width="18" height="18" loading="lazy">GitHub</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/shamir-delgado-lanuza-0b7274314"><img class="contact-icon logo-badge" src="img/contacto/linkedin.svg" alt="" width="18" height="18" loading="lazy">LinkedIn</a>
         </div>
       </section>
     </main>
 
     <footer>
+      <picture class="footer-pokemon" aria-hidden="true"><source media="(prefers-reduced-motion: reduce)" srcset="img/gengar1.png"><img src="img/gengar-footer.gif" alt="" width="72" height="81" loading="lazy"></picture>
       <span data-es="Hecho a mano con HTML, CSS y JavaScript." data-en="Handmade with HTML, CSS and JavaScript.">Hecho a mano con HTML, CSS y JavaScript.</span>
     </footer>
   </div>
 
+
+  <!-- El filtro hace transparente el negro al mostrar las poses; no modifica el JPG. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><defs><filter id="pokemon-remove-black" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  1 1 1 0 0"/><feComponentTransfer><feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1"/></feComponentTransfer></filter><filter id="pokemon-remove-white" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 3 0"/><feComponentTransfer><feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1"/></feComponentTransfer></filter></defs></svg>
   <script>
     /* ---------- Cambio de idioma ----------
        Recorre todos los elementos que tienen data-es / data-en y les pone el texto del idioma elegido. */
@@ -416,6 +495,7 @@
         el.textContent = el.dataset[l];                   // dataset.es o dataset.en
       });
       langBtn.textContent = l === "es" ? "EN" : "ES";     // el botón muestra el idioma al que vas a cambiar
+      paintTheme();
     }
     langBtn.addEventListener("click", () => setLang(lang === "es" ? "en" : "es"));
 
@@ -428,7 +508,8 @@
     function paintTheme() {
       const night = document.documentElement.dataset.theme === "night";
       themeBtn.setAttribute("aria-checked", String(night));
-      knob.textContent = night ? "🌙" : "☀️";
+      document.getElementById("themeBall").src = night ? "img/ultraball.webp" : "img/honorball.png";
+      themeBtn.setAttribute("aria-label", lang === "en" ? (night ? "Activate day theme" : "Activate night theme") : (night ? "Activar tema día" : "Activar tema noche"));
     }
     themeBtn.addEventListener("click", () => {
       const next = document.documentElement.dataset.theme === "night" ? "day" : "night";
@@ -476,15 +557,28 @@
     const bg = document.getElementById("bg");
     // [imagen, posición horizontal en %, posición vertical inicial en px, ancho en px, depth]
     const specs = [
-      ["gengar3", 4, 80, 80, .30],   ["gastly3", 14, 420, 90, .55], ["gengar2", 30, 640, 70, .22],
-      ["gastly2", 46, 180, 76, .40], ["gengar4", 62, 560, 104, .65], ["gastly4", 74, 60, 70, .28],
-      ["gengar1", 84, 330, 90, .50], ["gastly1", 92, 700, 66, .35], ["gastly3", 22, 260, 56, .18],
-      ["gengar3", 54, 760, 84, .45]
+      ["gengar3", 4, 80, 80, .30], ["pose-haunter", 14, 420, 100, .55], ["gengar2", 30, 640, 70, .22],
+      ["pose-gastly", 46, 180, 82, .40], ["gengar4", 62, 560, 104, .65], ["gastly4", 74, 60, 70, .28],
+      ["gengar1", 84, 330, 90, .50], ["pose-gengar", 88, 700, 95, .35], ["gastly3", 22, 260, 56, .18],
+      ["pose-haunter", 54, 760, 84, .45], ["gastly2", 7, 590, 62, .24], ["pose-gengar", 78, 220, 78, .32]
     ];
     const sprites = specs.map(([name, x, y, w, d], i) => {
-      const el = document.createElement("img");
-      el.src = "img/" + name + ".png";
-      el.alt = "";
+      const sheet = name.startsWith("pose-");
+      const el = document.createElement(sheet ? "span" : "img");
+      if (sheet) {
+        el.className = "sprite-sheet";
+        const viewport = document.createElement("span");
+        viewport.className = "pose-window " + name;
+        const img = document.createElement("img");
+        img.src = "img/pokemon-poses.jpg";
+        img.alt = "";
+        viewport.appendChild(img);
+        el.appendChild(viewport);
+      } else {
+        el.src = "img/" + name + ".png";
+        el.alt = "";
+      }
+      el.setAttribute("aria-hidden", "true");
       el.style.left = x + "%";
       el.style.setProperty("--s", w + "px");
       bg.appendChild(el);
@@ -509,6 +603,53 @@
     }, { passive: true });
     window.addEventListener("resize", drawBg);
     drawBg();
+
+    /* Cursor animado solo con mouse: conserva el cursor normal si no carga. */
+    const cursorMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const gifCursor = document.createElement("span");
+    gifCursor.className = "gif-cursor";
+    gifCursor.hidden = true;
+    gifCursor.setAttribute("aria-hidden", "true");
+    const cursorImage = document.createElement("img");
+    cursorImage.alt = "";
+    cursorImage.width = 48;
+    cursorImage.height = 40;
+    gifCursor.appendChild(cursorImage);
+    document.body.appendChild(gifCursor);
+    let cursorRequested = false;
+    let cursorFrame = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    const hideGifCursor = () => {
+      gifCursor.hidden = true;
+      gifCursor.classList.remove("is-grabbing");
+      document.documentElement.classList.remove("gif-cursor-active");
+    };
+    cursorImage.addEventListener("error", hideGifCursor);
+    document.addEventListener("pointermove", event => {
+      if (event.pointerType !== "mouse" || !finePointer.matches || cursorMotion.matches) { hideGifCursor(); return; }
+      if (!cursorRequested) { cursorRequested = true; cursorImage.src = "img/haunter-cursor.gif"; }
+      if (!cursorImage.complete || !cursorImage.naturalWidth) return;
+      cursorX = event.clientX - 7;
+      cursorY = event.clientY - 27;
+      if (cursorFrame) return;
+      cursorFrame = requestAnimationFrame(() => {
+        cursorFrame = 0;
+        if (!finePointer.matches || cursorMotion.matches || !document.hasFocus()) return;
+        gifCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+        gifCursor.hidden = false;
+        document.documentElement.classList.add("gif-cursor-active");
+      });
+    }, { passive: true });
+    document.addEventListener("pointerdown", event => { if (event.pointerType === "mouse") gifCursor.classList.add("is-grabbing"); });
+    document.addEventListener("pointerup", () => gifCursor.classList.remove("is-grabbing"));
+    document.addEventListener("pointerout", event => { if (!event.relatedTarget) hideGifCursor(); });
+    window.addEventListener("blur", hideGifCursor);
+    window.addEventListener("pagehide", hideGifCursor);
+    cursorMotion.addEventListener("change", hideGifCursor);
+    finePointer.addEventListener("change", hideGifCursor);
+
   </script>
 </body>
 </html>
