@@ -1,655 +1,708 @@
-<!DOCTYPE html>
-<!--
-  PORTAFOLIO DE SHAMIR — versión Gengar
-  - HTML  = la estructura y el contenido (títulos, párrafos, enlaces)
-  - CSS   = el diseño (colores, tamaños, posiciones), va dentro de <style>
-  - JS    = el comportamiento (idioma, tema día/noche, carta, fondo), va en el último bloque de script
-
-  IMPORTANTE: este archivo usa imágenes de la carpeta "img/". Tienen que quedar juntos así:
-      portafolio/
-        index.html
-        img/   (icon.png, gastly-cursor.png, gengar1.png ... )
--->
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8">
-  <!-- Esto hace que la página se vea bien en celular -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shamir Delgado | Portafolio</title>
-  <meta name="description" content="Portafolio de Shamir Delgado: desarrollo full-stack, proyectos web y reparación de hardware.">
-  <link rel="icon" href="img/icon.png">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shamir Delgado | Portafolio</title>
+    <meta
+      name="description"
+      content="Portafolio de Shamir Delgado: desarrollo full-stack, proyectos web y reparación de hardware."
+    />
+    <link rel="icon" href="img/icon.png" />
 
-  <!-- Este mini-script va en el <head> a propósito: elige el tema ANTES de pintar la página, para que no parpadee.
-       Usa el tema que guardaste la última vez; si no hay, usa el del sistema (claro u oscuro). -->
-  <script>
-    (function () {
-      var t = null;
-      try { t = localStorage.getItem("tema"); } catch (e) {}
-      if (t !== "day" && t !== "night") {
-        t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day";
-      }
-      document.documentElement.dataset.theme = t;
-    })();
-  </script>
+    <!-- Aplica el tema antes del primer renderizado. -->
+    <script>
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem("tema");
+        } catch {
+          // El almacenamiento puede estar deshabilitado.
+        }
+        if (theme !== "day" && theme !== "night") {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "night"
+            : "day";
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
 
-  <!-- Fuentes de Google. Si no cargan, el navegador usa las de respaldo (sans-serif) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg" id="bg" aria-hidden="true"></div>
 
-  <style>
-    /* ---------- 1. Variables: los colores de cada tema en un solo lugar ----------
-       El tema día es el de :root. El tema noche los reemplaza cuando <html> tiene data-theme="night". */
-    :root {
-      --bg: #f4effd;          /* fondo general */
-      --surface: #ffffff;     /* tarjetas, botones */
-      --ink: #20123a;         /* texto principal */
-      --muted: #5a4b7c;       /* texto secundario */
-      --accent: #6b3fd4;      /* morado principal */
-      --accent-hover: #5128b0;
-      --on-accent: #ffffff;   /* texto sobre el morado */
-      --eye: #e5484d;         /* rojo de los ojos de Gengar */
-      --line: #d9cdf0;        /* líneas divisorias */
-      --card-bg: #fbf8ff;
-      --frame: linear-gradient(145deg, #6a3fd4, #b08cff 55%, #5a2fc0);
-      --display: "Bricolage Grotesque", system-ui, sans-serif;
-      --body: "Figtree", system-ui, sans-serif;
-    }
-    html[data-theme="night"] {
-      --bg: #120b22;
-      --surface: #1c1233;
-      --ink: #f0eaff;
-      --muted: #b3a5d9;
-      --accent: #b18cff;
-      --accent-hover: #cdb4ff;
-      --on-accent: #150c28;
-      --eye: #ff5a60;
-      --line: #35294f;
-      --card-bg: #1a1030;
-    }
+    <div class="wrap">
+      <header class="top">
+        <a class="logo" href="#inicio" aria-label="Inicio">
+          <img src="img/icon.png" alt="Shamir" />
+        </a>
+        <nav>
+          <a href="#proyectos" data-es="Proyectos" data-en="Projects">
+            Proyectos
+          </a>
+          <a href="#skills" data-es="Skills" data-en="Skills">Skills</a>
+          <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
+          <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
+          <button
+            class="lang"
+            id="langBtn"
+            type="button"
+            aria-label="Change language"
+          >
+            EN
+          </button>
+          <button
+            class="theme"
+            id="themeBtn"
+            type="button"
+            role="switch"
+            aria-checked="false"
+            aria-label="Tema día / noche"
+          >
+            <span class="knob" id="knob">
+              <img
+                id="themeBall"
+                src="img/honorball.png"
+                width="28"
+                height="28"
+                alt=""
+                aria-hidden="true"
+              />
+            </span>
+          </button>
+        </nav>
+      </header>
 
-    /* ---------- 2. Base ---------- */
-    * {
-      box-sizing: border-box;
-      /* Cursor personalizado: Gastly. Los números son el "punto activo" (dónde hace click). */
-      cursor: url("img/gastly-cursor.png") 17 22, auto;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: var(--body);
-      font-size: 1.0625rem;
-      line-height: 1.6;
-      transition: background .3s, color .3s;
-    }
-    a { color: var(--accent); }
-    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-
-    .wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.25rem; }
-
-    /* ---------- 3. Barra superior ---------- */
-    header.top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; }
-    header.top nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .4rem 1.1rem; align-items: center; }
-    header.top nav a { color: var(--ink); text-decoration: none; font-weight: 500; }
-    header.top nav a:hover { color: var(--accent); }
-
-    .logo img { display: block; width: 2.6rem; height: 2.6rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
-
-    .lang {
-      font: inherit; font-weight: 600;
-      background: var(--surface); color: var(--ink);
-      border: 2px solid var(--ink); border-radius: 999px; padding: .2rem .9rem;
-    }
-    .lang:hover { background: var(--ink); color: var(--bg); }
-
-    /* Interruptor día/noche: una píldora con una bolita que se desliza */
-    .theme {
-      position: relative; width: 3.5rem; height: 1.95rem; padding: 0;
-      background: var(--surface); border: 2px solid var(--ink); border-radius: 999px;
-    }
-    .theme .knob {
-      position: absolute; top: 50%; left: 3px; width: 1.4rem; height: 1.4rem; margin-top: -.7rem;
-      display: grid; place-items: center; font-size: .95rem; line-height: 1;
-      border-radius: 50%; background: var(--accent); transition: left .25s;
-    }
-    html[data-theme="night"] .theme .knob { left: calc(100% - 1.4rem - 3px); }
-
-    /* ---------- 4. Hero: texto a la izquierda, carta a la derecha ---------- */
-    .hero { display: grid; gap: 3rem; align-items: center; padding: 2.5rem 0 4.5rem; grid-template-columns: 1fr; }
-    @media (min-width: 52rem) { .hero { grid-template-columns: 1.15fr .85fr; } }
-
-    h1 {
-      font-family: var(--display); font-weight: 800;
-      font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1.02; letter-spacing: -0.03em; margin: 0 0 1.25rem;
-    }
-    .hero p { max-width: 34rem; color: var(--muted); font-size: 1.15rem; margin: 0 0 1.25rem; }
-    .hero p.now { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 1.5rem; }
-
-    .btn { display: inline-block; text-decoration: none; font-weight: 600; padding: .8rem 1.4rem; border-radius: .6rem; margin-right: .5rem; margin-bottom: .5rem; }
-    .btn.primary { background: var(--accent); color: var(--on-accent); }
-    .btn.primary:hover { background: var(--accent-hover); }
-    .btn.ghost { border: 2px solid var(--ink); color: var(--ink); }
-    .btn.ghost:hover { background: var(--ink); color: var(--bg); }
-
-    /* ---------- 5. La carta (lo memorable de la página) ---------- */
-    .card-stage { display: flex; justify-content: center; perspective: 900px; }
-    .card {
-      --mx: 50%; --my: 50%;                    /* posición del dedo/mouse, la actualiza el JS */
-      position: relative; width: min(19rem, 100%); aspect-ratio: 5 / 7;
-      background: var(--frame); border-radius: 1.1rem; padding: .7rem;
-      box-shadow: 0 18px 40px rgba(60, 20, 140, .35);
-      transition: transform .15s ease-out;
-      transform-style: preserve-3d;
-    }
-    .card-inner {
-      height: 100%; background: var(--card-bg); border-radius: .7rem; padding: .8rem;
-      display: flex; flex-direction: column; gap: .6rem; overflow: hidden; position: relative;
-    }
-    .card-head { display: flex; justify-content: space-between; align-items: baseline; }
-    .card-head strong { font-family: var(--display); font-size: 1.35rem; }
-    .card-head span { font-weight: 600; font-size: .85rem; color: var(--muted); }
-
-    /* El "arte" de la carta: fondo morado con tu icono en un circulito */
-    .art {
-      flex: 0 1 40%; min-height: 0; border-radius: .5rem; width: 100%;
-      background: linear-gradient(135deg, #2a1259 0%, #6a3fd4 60%, #b08cff 120%);
-      position: relative;
-    }
-    /* El circulito va con position:absolute para que su alto (84%) se calcule siempre respecto a la caja morada */
-    .art img {
-      position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
-      height: 84%; aspect-ratio: 1; border-radius: 50%; object-fit: cover;
-      border: 4px solid #fff; box-shadow: 0 0 0 3px rgba(255, 90, 96, .8), 0 8px 18px rgba(0, 0, 0, .35);
-    }
-    .stats { list-style: none; margin: 0; padding: 0; font-size: .92rem; }
-    .stats li { display: flex; justify-content: space-between; gap: .5rem; padding: .3rem 0; border-bottom: 1px solid var(--line); }
-    .stats li span:first-child { color: var(--muted); }
-    .stats li span:last-child { font-weight: 600; text-align: right; }
-    .card-foot { margin-top: auto; font-size: .78rem; color: var(--muted); }
-
-    /* Brillo holográfico: franja de colores que se desliza según dónde tocás + destello blanco */
-    .card::before, .card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2; }
-    .card::before {
-      background: linear-gradient(115deg, transparent 15%, rgba(255,80,160,.55) 32%, rgba(255,230,80,.55) 44%,
-                  rgba(80,255,200,.55) 56%, rgba(90,120,255,.55) 68%, transparent 85%);
-      background-size: 260% 260%; background-position: var(--mx) var(--my);
-      mix-blend-mode: overlay; opacity: .85;
-    }
-    .card::after { background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.6), transparent 45%); mix-blend-mode: soft-light; }
-    /* Único momento animado al cargar: la carta cae y se acomoda */
-    .card { animation: drop .9s cubic-bezier(.2, .9, .3, 1.15) backwards; }
-    @keyframes drop { from { opacity: 0; transform: translateY(-3rem) rotateZ(-9deg) rotateY(80deg); } }
-
-    /* ---------- Fondo: sprites que flotan y giran en 3D mientras hacés scroll ---------- */
-    .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; perspective: 900px; }
-    .bg img { position: absolute; top: 0; width: var(--s); height: auto; opacity: .22; image-rendering: pixelated; will-change: transform; }
-
-    /* ---------- 6. Secciones ---------- */
-    section { padding: 3.5rem 0; border-top: 1px solid var(--line); }
-    h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.3rem); letter-spacing: -0.02em; margin: 0 0 1.5rem; }
-
-    /* Proyectos: filas, no tarjetas iguales */
-    .project { display: grid; gap: .35rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
-    @media (min-width: 46rem) { .project { grid-template-columns: 11rem 1fr; } }
-    .project:last-child { border-bottom: 0; }
-    .project .when { color: var(--muted); font-weight: 500; }
-    .project h3 { font-family: var(--display); font-size: 1.35rem; margin: 0 0 .3rem; }
-    .project p { margin: 0 0 .7rem; max-width: 40rem; color: var(--muted); }
-    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .tags span { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: .1rem .7rem; font-size: .88rem; font-weight: 500; }
-    .status { display: inline-block; background: var(--eye); color: #fff; border-radius: .35rem; padding: 0 .5rem; font-size: .85rem; font-weight: 600; margin-left: .5rem; }
-
-    /* Skills: cada una es un botón; al tocarlo se voltea y muestra qué hice con eso */
-    .skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 1rem; }
-    .skill { perspective: 700px; height: 9.5rem; background: none; border: 0; padding: 0; font: inherit; color: inherit; text-align: left; }
-    .skill-inner { position: relative; width: 100%; height: 100%; transition: transform .55s; transform-style: preserve-3d; }
-    .skill[aria-pressed="true"] .skill-inner { transform: rotateY(180deg); }
-    .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-            border-radius: .8rem; padding: .9rem; display: flex; flex-direction: column; justify-content: space-between; }
-    .face.front { background: var(--surface); border: 3px solid var(--accent); }
-    .face.front b { font-family: var(--display); font-size: 1.35rem; line-height: 1.1; }
-    .face.front small { color: var(--muted); font-size: .9rem; }
-    .face.back { background: var(--accent); color: var(--on-accent); transform: rotateY(180deg); font-size: .92rem; line-height: 1.35; justify-content: center; }
-
-    .about { max-width: 40rem; }
-    .about p { margin: 0 0 1rem; }
-
-    /* Separación de enlaces y skills compactas. */
-    .project p.project-links { margin-top: 1.25rem; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
-    .project-links .btn { margin: 0; }
-    .skills.tags { grid-template-columns: repeat(auto-fit, minmax(8.75rem, 1fr)); gap: .9rem; max-width: 54rem; }
-    .skills.tags > span { display: flex; align-items: center; justify-content: flex-start; gap: .5rem; min-height: 48px; min-width: 0; padding: .6rem .7rem; border-radius: .6rem; }
-    .skills.tags b { font-size: .82rem; line-height: 1.3; font-weight: 600; overflow-wrap: anywhere; }
-    .skills.tags .hardware-skill b { font-size: .75rem; }
-    .skill-logo { display: block; flex-shrink: 0; width: 28px; height: 28px; object-fit: contain; padding: 3px; border-radius: .35rem; background: var(--bg); }
-    html[data-theme="night"] .skill-logo { background: var(--ink); }
-    .skills.tags .skill-logos { display: flex; gap: 2px; padding: 0; border: 0; background: none; border-radius: 0; }
-    .skill-logos .skill-logo { width: 18px; height: 18px; padding: 1px; }
-    @media (max-width: 30rem) {
-      .skills.tags { gap: .75rem; }
-      .skills.tags > span { padding: .5rem; }
-    }
-
-    /* ---------- 7. Contacto y pie ---------- */
-    .contact-links { display: flex; flex-wrap: wrap; gap: .75rem; }
-    footer { padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; border-top: 1px solid var(--line); }
-
-    /* Si la persona pidió "menos movimiento" en su celular/PC, quitamos las animaciones */
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .card { transition: none; animation: none; }
-      .skill-inner, .theme .knob, body { transition: none; }
-    }
-
-
-    /* Detalles Pokémon: mismo tema, imágenes locales y movimiento corto. */
-    .theme .knob { width: 1.7rem; height: 1.7rem; margin-top: -.85rem; left: 0; background: transparent; }
-    html[data-theme="night"] .theme .knob { left: calc(100% - 1.7rem); }
-    .theme .knob img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
-    .card-foot { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; min-height: 32px; }
-    .masterball { justify-self: center; width: 30px; height: 30px; object-fit: contain; border-radius: 50%; }
-    .skills.tags > span { transition: transform .18s, background .18s, color .18s, border-color .18s; }
-    .skills.tags > span:hover, .skills.tags > span:focus-visible { transform: scale(1.035); background: var(--ink); color: var(--bg); border-color: var(--ink); }
-    .contact-links .btn { display: inline-flex; align-items: center; gap: .5rem; }
-    .contact-icon { flex-shrink: 0; width: 18px; height: 18px; }
-    .logo-badge { padding: 2px; border-radius: .2rem; background: var(--bg); }
-    html[data-theme="night"] .logo-badge { background: var(--ink); }
-    .bg .sprite-sheet { position: absolute; top: 0; width: var(--s); height: var(--s); opacity: .18; will-change: transform; }
-    .pose-window { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
-    .pose-window img { position: absolute; max-width: none; height: auto; opacity: 1; image-rendering: auto; filter: url(#pokemon-remove-black); }
-    .pose-haunter img { width: 428%; left: -17%; top: -11%; }
-    .pose-gastly img { width: 487%; left: -360%; top: -21%; }
-    .pose-gengar img { width: 367%; left: -214%; top: -98%; }
-    @media (max-width: 480px) { .bg .sprite-sheet { opacity: .12; } }
-    @media (prefers-reduced-motion: reduce) {
-      .skills.tags > span { transition: none; }
-      .skills.tags > span:hover, .skills.tags > span:focus-visible { transform: none; }
-    }
-
-
-    /* GIFs del saludo, carta y cursor. Los archivos originales no se modifican. */
-    .hero-greeting { display: flex; align-items: center; gap: .5rem; margin-bottom: 1.25rem; }
-    .hero-greeting h1 { flex: 1; min-width: 0; margin-bottom: 0; }
-    .greeting-pokemon { display: block; flex-shrink: 0; width: 100px; }
-    .greeting-pokemon img { display: block; width: 100%; height: auto; object-fit: contain; }
-    .card-pokemon { display: block; justify-self: center; width: 44px; height: 44px; }
-    .spin-animated { display: block; width: 44px; height: 44px; object-fit: contain; image-rendering: pixelated; }
-    .spin-static { display: none; }
-    .gif-cursor[hidden] { display: none; }
-    .gif-cursor { position: fixed; left: 0; top: 0; width: 48px; height: 40px; z-index: 200; pointer-events: none; will-change: transform; }
-    .gif-cursor img { display: block; width: 100%; height: 100%; object-fit: contain; filter: url(#pokemon-remove-white); }
-    .gif-cursor.is-grabbing img { transform: scale(.9); }
-    html.gif-cursor-active, html.gif-cursor-active * { cursor: none !important; }
-    @media (max-width: 480px) { .greeting-pokemon { width: 76px; } }
-    @media (prefers-reduced-motion: reduce) {
-      .spin-animated { display: none; }
-      .spin-static { display: block; }
-      .gif-cursor { display: none !important; }
-    }
-
-
-    /* GIFs junto al título y antes del texto del footer. */
-    .about-heading { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.5rem; }
-    .about-heading h2 { margin-bottom: 0; }
-    .about-heading picture { display: block; flex-shrink: 0; }
-    .about-heading img { display: block; width: 60px; height: 60px; object-fit: contain; }
-    .footer-pokemon { display: block; width: 72px; margin-bottom: .75rem; }
-    .footer-pokemon img { display: block; width: 72px; height: 81px; object-fit: contain; }
-  </style>
-</head>
-
-<body>
-  <!-- El JS de abajo llena este div con sprites flotantes -->
-  <div class="bg" id="bg" aria-hidden="true"></div>
-
-  <div class="wrap">
-
-    <!-- ========== BARRA SUPERIOR ========== -->
-    <!-- data-es y data-en guardan el texto en cada idioma; el JS de abajo cambia entre ellos -->
-    <header class="top">
-      <a class="logo" href="#inicio" aria-label="Inicio"><img src="img/icon.png" alt="Shamir"></a>
-      <nav>
-        <a href="#proyectos" data-es="Proyectos" data-en="Projects">Proyectos</a>
-        <a href="#skills" data-es="Skills" data-en="Skills">Skills</a>
-        <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
-        <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
-        <button class="lang" id="langBtn" type="button" aria-label="Change language">EN</button>
-        <button class="theme" id="themeBtn" type="button" role="switch" aria-checked="false" aria-label="Tema día / noche"><span class="knob" id="knob"><img id="themeBall" src="img/honorball.png" width="28" height="28" alt="" aria-hidden="true"></span></button>
-      </nav>
-    </header>
-
-    <main id="inicio">
-
-      <!-- ========== HERO ========== -->
-      <div class="hero">
-        <div>
-          <div class="hero-greeting">
-            <h1 data-es="Hola, soy Shamir." data-en="Hi, I'm Shamir.">Hola, soy Shamir.</h1>
-            <picture class="greeting-pokemon" aria-hidden="true"><source media="(prefers-reduced-motion: reduce)" srcset="img/gastly1.png"><img src="img/tres-evoluciones.gif" alt="" width="100" height="106"></picture>
+      <main id="inicio">
+        <div class="hero">
+          <div>
+            <div class="hero-greeting">
+              <h1 data-es="Hola, soy Shamir." data-en="Hi, I'm Shamir.">
+                Hola, soy Shamir.
+              </h1>
+              <picture class="greeting-pokemon" aria-hidden="true">
+                <source
+                  media="(prefers-reduced-motion: reduce)"
+                  srcset="img/gastly1.png"
+                />
+                <img
+                  src="img/tres-evoluciones.gif"
+                  alt=""
+                  width="100"
+                  height="106"
+                />
+              </picture>
+            </div>
+            <p
+              data-es="Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo proyectos web y sigo ampliando mis conocimientos en interfaces, APIs y bases de datos."
+              data-en="Systems Engineering student from Costa Rica. I build web projects and continue developing my knowledge of interfaces, APIs and databases."
+            >
+              Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo
+              proyectos web y sigo ampliando mis conocimientos en interfaces,
+              APIs y bases de datos.
+            </p>
+            <p
+              class="now"
+              data-es="Junior Full-Stack Developer · Desarrollo web y reparación de hardware."
+              data-en="Junior Full-Stack Developer · Web development and hardware repair."
+            >
+              Junior Full-Stack Developer · Desarrollo web y reparación de
+              hardware.
+            </p>
+            <a
+              class="btn primary"
+              href="#proyectos"
+              data-es="Ver mis proyectos"
+              data-en="See my projects"
+            >
+              Ver mis proyectos
+            </a>
+            <a
+              class="btn ghost"
+              href="#contacto"
+              data-es="Contactame"
+              data-en="Get in touch"
+            >
+              Contactame
+            </a>
           </div>
-          <p data-es="Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo proyectos web y sigo ampliando mis conocimientos en interfaces, APIs y bases de datos."
-             data-en="Systems Engineering student from Costa Rica. I build web projects and continue developing my knowledge of interfaces, APIs and databases.">
-            Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo proyectos web y sigo ampliando mis conocimientos en interfaces, APIs y bases de datos.
-          </p>
-          <p class="now" data-es="Junior Full-Stack Developer · Desarrollo web y reparación de hardware."
-             data-en="Junior Full-Stack Developer · Web development and hardware repair.">Junior Full-Stack Developer · Desarrollo web y reparación de hardware.</p>
-          <a class="btn primary" href="#proyectos" data-es="Ver mis proyectos" data-en="See my projects">Ver mis proyectos</a>
-          <a class="btn ghost" href="#contacto" data-es="Contactame" data-en="Get in touch">Contactame</a>
-        </div>
 
-        <!-- La carta: mové el mouse o arrastrá el dedo encima -->
-        <div class="card-stage">
-          <div class="card" id="card">
-            <div class="card-inner">
-              <div class="card-head"><strong>Shamir</strong><span>Systems Eng.</span></div>
-              <div class="art"><img src="img/icon.png" alt="Shamir"></div>
-              <ul class="stats">
-                <li><span data-es="Lenguajes" data-en="Languages">Lenguajes</span><span>Python, JS, C#</span></li>
-                <li><span data-es="Web" data-en="Web">Web</span><span>HTML, CSS, JS</span></li>
-                <li><span data-es="Idiomas" data-en="Spoken">Idiomas</span><span>ES, EN</span></li>
-              </ul>
-              <div class="card-foot"><span>Costa Rica</span><span class="card-pokemon" aria-hidden="true"><img class="spin-animated" src="img/haunter-spin.gif" alt="" width="44" height="44"><span class="spin-static pose-window pose-haunter"><img src="img/pokemon-poses.jpg" alt=""></span></span><span aria-hidden="true"></span></div>
+          <div class="card-stage">
+            <div class="card" id="card">
+              <div class="card-inner">
+                <div class="card-head">
+                  <strong>Shamir</strong>
+                  <span>Systems Eng.</span>
+                </div>
+                <div class="art"><img src="img/icon.png" alt="Shamir" /></div>
+                <ul class="stats">
+                  <li>
+                    <span data-es="Lenguajes" data-en="Languages">
+                      Lenguajes
+                    </span>
+                    <span>Python, JS, C#</span>
+                  </li>
+                  <li>
+                    <span data-es="Web" data-en="Web">Web</span>
+                    <span>HTML, CSS, JS</span>
+                  </li>
+                  <li>
+                    <span data-es="Idiomas" data-en="Spoken">Idiomas</span>
+                    <span>ES, EN</span>
+                  </li>
+                </ul>
+                <div class="card-foot">
+                  <span>Costa Rica</span>
+                  <span class="card-pokemon" aria-hidden="true">
+                    <img
+                      class="spin-animated"
+                      src="img/haunter-spin.gif"
+                      alt=""
+                      width="44"
+                      height="44"
+                    />
+                    <span class="spin-static pose-window pose-haunter">
+                      <img src="img/pokemon-poses.jpg" alt="" />
+                    </span>
+                  </span>
+                  <span aria-hidden="true"></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- ========== PROYECTOS ==========
-           EDITÁ: cuando subás cada proyecto a GitHub, agregá un enlace dentro del <p>:
-           <a href="https://github.com/shamirdelgado/NOMBRE-DEL-REPO">Código</a>
-           Poné solo lo que sea verdad. Un proyecto pequeño y real vale más que uno inflado. -->
-      <section id="proyectos">
-        <h2 data-es="Proyectos" data-en="Projects">Proyectos</h2>
+        <section id="proyectos">
+          <h2 data-es="Proyectos" data-en="Projects">Proyectos</h2>
 
-        <article class="project">
-          <div class="when" data-es="2026, en progreso" data-en="2026, in progress">2026, en progreso</div>
-          <div>
-            <h3>
-              <span data-es="Tracker de cartas Pokémon" data-en="Pokémon card tracker">Tracker de cartas Pokémon</span>
-              <span class="status" data-es="En progreso" data-en="In progress">En progreso</span>
-            </h3>
-            <p data-es="App para registrar mi colección de cartas, con base de datos. Ahora funciona en consola; sigue una API de cartas y una versión web para celular."
-               data-en="App to track my card collection, backed by a database. It runs in the console for now; next come a cards API and a mobile-friendly web version.">
-              App para registrar mi colección de cartas, con base de datos. Ahora funciona en consola; sigue una API de cartas y una versión web para celular.
-            </p>
-            <div class="tags"><span>Python</span><span>SQLite</span></div>
+          <article class="project">
+            <div
+              class="when"
+              data-es="2026, en progreso"
+              data-en="2026, in progress"
+            >
+              2026, en progreso
+            </div>
+            <div>
+              <h3>
+                <span
+                  data-es="Tracker de cartas Pokémon"
+                  data-en="Pokémon card tracker"
+                >Tracker de cartas Pokémon</span>
+                <span
+                  class="status"
+                  data-es="En progreso"
+                  data-en="In progress"
+                >
+                  En progreso
+                </span>
+              </h3>
+              <p
+                data-es="App para registrar mi colección de cartas, con base de datos. Ahora funciona en consola; sigue una API de cartas y una versión web para celular."
+                data-en="App to track my card collection, backed by a database. It runs in the console for now; next come a cards API and a mobile-friendly web version."
+              >
+                App para registrar mi colección de cartas, con base de datos.
+                Ahora funciona en consola; sigue una API de cartas y una versión
+                web para celular.
+              </p>
+              <div class="tags">
+                <span>Python</span>
+                <span>SQLite</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="when" data-es="2026" data-en="2026">2026</div>
+            <div>
+              <h3>
+                <span data-es="Courier Demo" data-en="Courier Demo">Courier Demo</span>
+                <span class="status" data-es="Demo" data-en="Demo">Demo</span>
+              </h3>
+              <p
+                data-es="Demo de un casillero de compras con envíos de EE. UU. a Costa Rica. Incluye cotizador, prealerta, rastreo y panel de usuario con datos y funciones simulados."
+                data-en="Demo of a shopping forwarding service from the US to Costa Rica. Includes a shipping estimator, package pre-alerts, tracking and a user dashboard with simulated data and features."
+              >
+                Demo de un casillero de compras con envíos de EE. UU. a Costa
+                Rica. Incluye cotizador, prealerta, rastreo y panel de usuario
+                con datos y funciones simulados.
+              </p>
+              <div class="tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+              </div>
+              <p class="project-links">
+                <a
+                  class="btn primary"
+                  href="https://shamirdelgado.github.io/courier-demo/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-es="Ver demo"
+                  data-en="View demo"
+                >
+                  Ver demo
+                </a>
+                <a
+                  class="btn ghost"
+                  href="https://github.com/shamirdelgado/courier-demo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-es="Ver código"
+                  data-en="View code"
+                >
+                  Ver código
+                </a>
+              </p>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="when">2026</div>
+            <div>
+              <h3>
+                <span
+                  data-es="Gestor de finanzas personales"
+                  data-en="Personal finance manager"
+                >Gestor de finanzas personales</span>
+                <span class="status" data-es="Planificado" data-en="Planned">
+                  Planificado
+                </span>
+              </h3>
+              <p
+                data-es="Proyecto planificado para organizar ingresos y gastos, definir presupuestos y consultar un resumen mensual con gráficos, filtros por fecha y exportación a CSV."
+                data-en="Planned project to organize income and expenses, set budgets and view a monthly summary with charts, date filters and CSV export."
+              >
+                Proyecto planificado para organizar ingresos y gastos, definir
+                presupuestos y consultar un resumen mensual con gráficos,
+                filtros por fecha y exportación a CSV.
+              </p>
+              <div class="tags">
+                <span>React</span>
+                <span>TypeScript</span>
+                <span>Python</span>
+                <span>FastAPI</span>
+                <span>PostgreSQL</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="skills">
+          <h2 data-es="Skills" data-en="Skills">Skills</h2>
+          <div class="skills tags">
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg"
+                alt="Python"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Python</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/sqlite/sqlite-original.svg"
+                alt="SQLite"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>SQLite</b>
+            </span>
+            <span>
+              <span class="skill-logos">
+                <img
+                  class="skill-logo"
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg"
+                  alt="HTML"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                />
+                <img
+                  class="skill-logo"
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg"
+                  alt="CSS"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                />
+                <img
+                  class="skill-logo"
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg"
+                  alt="JavaScript"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                />
+              </span>
+              <b>HTML, CSS, JS</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/csharp/csharp-original.svg"
+                alt="C#"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>C#</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg"
+                alt="TypeScript"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>TypeScript</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg"
+                alt="React"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>React</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg"
+                alt="FastAPI"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>FastAPI</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg"
+                alt="PostgreSQL"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>PostgreSQL</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg"
+                alt="SQL"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>SQL</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg"
+                alt="Git"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Git</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg"
+                alt="GitHub"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>GitHub</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+                alt="AWS"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>AWS</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg"
+                alt="Docker"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Docker</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/playwright/playwright-original.svg"
+                alt="Playwright"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Playwright</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/pytest/pytest-original.svg"
+                alt="Pytest"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Pytest</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg"
+                alt="GitHub Actions"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>GitHub Actions</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postman/postman-original.svg"
+                alt="Postman"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Postman</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg"
+                alt="Linux"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Linux</b>
+            </span>
+            <span tabindex="0">
+              <img
+                class="skill-logo"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/figma/figma-original.svg"
+                alt="Figma"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b>Figma</b>
+            </span>
+            <span class="hardware-skill" tabindex="0">
+              <img
+                class="skill-logo"
+                src="img/hardware/celulares.svg"
+                alt="Reparación de celulares"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b data-es="Celulares" data-en="Phones">Celulares</b>
+            </span>
+            <span class="hardware-skill" tabindex="0">
+              <img
+                class="skill-logo"
+                src="img/hardware/computadoras.svg"
+                alt="Reparación de computadoras"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b data-es="Computadoras" data-en="Computers">Computadoras</b>
+            </span>
+            <span class="hardware-skill" tabindex="0">
+              <img
+                class="skill-logo"
+                src="img/hardware/consolas.svg"
+                alt="Reparación de consolas"
+                loading="lazy"
+                width="28"
+                height="28"
+              />
+              <b data-es="Consolas" data-en="Consoles">Consolas</b>
+            </span>
           </div>
-        </article>
+        </section>
 
-        <article class="project">
-          <div class="when" data-es="2026" data-en="2026">2026</div>
-          <div>
-            <h3>
-              <span data-es="Courier Demo" data-en="Courier Demo">Courier Demo</span>
-              <span class="status" data-es="Demo" data-en="Demo">Demo</span>
-            </h3>
-            <p data-es="Demo de un casillero de compras con envíos de EE. UU. a Costa Rica. Incluye cotizador, prealerta, rastreo y panel de usuario con datos y funciones simulados."
-               data-en="Demo of a shopping forwarding service from the US to Costa Rica. Includes a shipping estimator, package pre-alerts, tracking and a user dashboard with simulated data and features.">
-              Demo de un casillero de compras con envíos de EE. UU. a Costa Rica. Incluye cotizador, prealerta, rastreo y panel de usuario con datos y funciones simulados.
+        <section id="sobre-mi">
+          <div class="about-heading">
+            <h2 data-es="Sobre mí" data-en="About me">Sobre mí</h2>
+            <picture aria-hidden="true">
+              <source
+                media="(prefers-reduced-motion: reduce)"
+                srcset="img/gengar1.png"
+              />
+              <img
+                src="img/sobre-mi-shiny.gif"
+                alt=""
+                width="60"
+                height="60"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <div class="about">
+            <p
+              data-es="Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi enfoque es conectar interfaces, lógica de aplicación y bases de datos para desarrollar soluciones web completas."
+              data-en="I am Shamir Delgado, a Junior Full-Stack Developer studying Systems Engineering at Universidad Latina de Costa Rica. My focus is connecting interfaces, application logic and databases to build complete web solutions."
+            >
+              Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de
+              Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi
+              enfoque es conectar interfaces, lógica de aplicación y bases de
+              datos para desarrollar soluciones web completas.
             </p>
-            <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
-            <p class="project-links">
-              <a class="btn primary" href="https://shamirdelgado.github.io/courier-demo/" target="_blank" rel="noopener noreferrer" data-es="Ver demo" data-en="View demo">Ver demo</a>
-              <a class="btn ghost" href="https://github.com/shamirdelgado/courier-demo" target="_blank" rel="noopener noreferrer" data-es="Ver código" data-en="View code">Ver código</a>
+            <p
+              data-es="También tengo experiencia real en reparación de celulares, computadoras y consolas. El diagnóstico de fallas y el trabajo con hardware forman parte de mis conocimientos técnicos y de mi manera de resolver problemas."
+              data-en="I also have hands-on experience repairing phones, computers and consoles. Troubleshooting and working with hardware are part of my technical skills and approach to solving problems."
+            >
+              También tengo experiencia real en reparación de celulares,
+              computadoras y consolas. El diagnóstico de fallas y el trabajo con
+              hardware forman parte de mis conocimientos técnicos y de mi manera
+              de resolver problemas.
             </p>
           </div>
-        </article>
+        </section>
 
-        <article class="project">
-          <div class="when">2026</div>
-          <div>
-            <h3>
-              <span data-es="Gestor de finanzas personales" data-en="Personal finance manager">Gestor de finanzas personales</span>
-              <span class="status" data-es="Planificado" data-en="Planned">Planificado</span>
-            </h3>
-            <p data-es="Proyecto planificado para organizar ingresos y gastos, definir presupuestos y consultar un resumen mensual con gráficos, filtros por fecha y exportación a CSV."
-               data-en="Planned project to organize income and expenses, set budgets and view a monthly summary with charts, date filters and CSV export.">
-              Proyecto planificado para organizar ingresos y gastos, definir presupuestos y consultar un resumen mensual con gráficos, filtros por fecha y exportación a CSV.
-            </p>
-            <div class="tags"><span>React</span><span>TypeScript</span><span>Python</span><span>FastAPI</span><span>PostgreSQL</span></div>
+        <section id="contacto">
+          <h2 data-es="Contacto" data-en="Get in touch">Contacto</h2>
+          <div class="contact-links">
+            <a class="btn primary" href="mailto:uzziellanuza@gmail.com">
+              <svg
+                class="contact-icon"
+                aria-hidden="true"
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="4" width="20" height="16" rx="3" />
+                <path d="m3 6 9 7 9-7" />
+              </svg>
+              Email
+            </a>
+            <a class="btn ghost" href="https://github.com/shamirdelgado">
+              <img
+                class="contact-icon logo-badge"
+                src="img/contacto/github.svg"
+                alt=""
+                width="18"
+                height="18"
+                loading="lazy"
+              />
+              GitHub
+            </a>
+            <a
+              class="btn ghost"
+              href="https://www.linkedin.com/in/shamir-delgado-lanuza-0b7274314"
+            >
+              <img
+                class="contact-icon logo-badge"
+                src="img/contacto/linkedin.svg"
+                alt=""
+                width="18"
+                height="18"
+                loading="lazy"
+              />
+              LinkedIn
+            </a>
           </div>
-        </article>
-      </section>
+        </section>
+      </main>
 
-      <!-- ========== SKILLS ==========
-           Tecnologías en etiquetas compactas. SQL usa el logo de PostgreSQL. -->
-      <section id="skills">
-        <h2 data-es="Skills" data-en="Skills">Skills</h2>
-        <div class="skills tags">
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="Python" loading="lazy" width="28" height="28"><b>Python</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy" width="28" height="28"><b>SQLite</b></span>
-          <span><span class="skill-logos"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg" alt="HTML" loading="lazy" width="28" height="28"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg" alt="CSS" loading="lazy" width="28" height="28"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy" width="28" height="28"></span><b>HTML, CSS, JS</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/csharp/csharp-original.svg" alt="C#" loading="lazy" width="28" height="28"><b>C#</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="TypeScript" loading="lazy" width="28" height="28"><b>TypeScript</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="React" loading="lazy" width="28" height="28"><b>React</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg" alt="FastAPI" loading="lazy" width="28" height="28"><b>FastAPI</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" loading="lazy" width="28" height="28"><b>PostgreSQL</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="SQL" loading="lazy" width="28" height="28"><b>SQL</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" alt="Git" loading="lazy" width="28" height="28"><b>Git</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg" alt="GitHub" loading="lazy" width="28" height="28"><b>GitHub</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" loading="lazy" width="28" height="28"><b>AWS</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="Docker" loading="lazy" width="28" height="28"><b>Docker</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/playwright/playwright-original.svg" alt="Playwright" loading="lazy" width="28" height="28"><b>Playwright</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/pytest/pytest-original.svg" alt="Pytest" loading="lazy" width="28" height="28"><b>Pytest</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg" alt="GitHub Actions" loading="lazy" width="28" height="28"><b>GitHub Actions</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postman/postman-original.svg" alt="Postman" loading="lazy" width="28" height="28"><b>Postman</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg" alt="Linux" loading="lazy" width="28" height="28"><b>Linux</b></span>
-          <span tabindex="0"><img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/figma/figma-original.svg" alt="Figma" loading="lazy" width="28" height="28"><b>Figma</b></span>
-          <span class="hardware-skill" tabindex="0"><img class="skill-logo" src="img/hardware/celulares.svg" alt="Reparación de celulares" loading="lazy" width="28" height="28"><b data-es="Celulares" data-en="Phones">Celulares</b></span>
-          <span class="hardware-skill" tabindex="0"><img class="skill-logo" src="img/hardware/computadoras.svg" alt="Reparación de computadoras" loading="lazy" width="28" height="28"><b data-es="Computadoras" data-en="Computers">Computadoras</b></span>
-          <span class="hardware-skill" tabindex="0"><img class="skill-logo" src="img/hardware/consolas.svg" alt="Reparación de consolas" loading="lazy" width="28" height="28"><b data-es="Consolas" data-en="Consoles">Consolas</b></span>
-        </div>
-      </section>
+      <footer>
+        <picture class="footer-pokemon" aria-hidden="true">
+          <source
+            media="(prefers-reduced-motion: reduce)"
+            srcset="img/gengar1.png"
+          />
+          <img
+            src="img/gengar-footer.gif"
+            alt=""
+            width="72"
+            height="81"
+            loading="lazy"
+          />
+        </picture>
+        <span
+          data-es="Hecho a mano con HTML, CSS y JavaScript."
+          data-en="Handmade with HTML, CSS and JavaScript."
+        >
+          Hecho a mano con HTML, CSS y JavaScript.
+        </span>
+      </footer>
+    </div>
 
-      <!-- ========== SOBRE MÍ ========== -->
-      <section id="sobre-mi">
-        <div class="about-heading">
-          <h2 data-es="Sobre mí" data-en="About me">Sobre mí</h2>
-          <picture aria-hidden="true"><source media="(prefers-reduced-motion: reduce)" srcset="img/gengar1.png"><img src="img/sobre-mi-shiny.gif" alt="" width="60" height="60" loading="lazy"></picture>
-        </div>
-        <div class="about">
-          <p data-es="Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi enfoque es conectar interfaces, lógica de aplicación y bases de datos para desarrollar soluciones web completas."
-             data-en="I am Shamir Delgado, a Junior Full-Stack Developer studying Systems Engineering at Universidad Latina de Costa Rica. My focus is connecting interfaces, application logic and databases to build complete web solutions.">
-            Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi enfoque es conectar interfaces, lógica de aplicación y bases de datos para desarrollar soluciones web completas.
-          </p>
-          <p data-es="También tengo experiencia real en reparación de celulares, computadoras y consolas. El diagnóstico de fallas y el trabajo con hardware forman parte de mis conocimientos técnicos y de mi manera de resolver problemas."
-             data-en="I also have hands-on experience repairing phones, computers and consoles. Troubleshooting and working with hardware are part of my technical skills and approach to solving problems.">
-            También tengo experiencia real en reparación de celulares, computadoras y consolas. El diagnóstico de fallas y el trabajo con hardware forman parte de mis conocimientos técnicos y de mi manera de resolver problemas.
-          </p>
-        </div>
-      </section>
-
-      <!-- ========== CONTACTO ==========
-           Si querés cambiar un enlace, editá el texto que está dentro de href="..." -->
-      <section id="contacto">
-        <h2 data-es="Contacto" data-en="Get in touch">Contacto</h2>
-        <div class="contact-links">
-          <a class="btn primary" href="mailto:uzziellanuza@gmail.com"><svg class="contact-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></svg>Email</a>
-          <a class="btn ghost" href="https://github.com/shamirdelgado"><img class="contact-icon logo-badge" src="img/contacto/github.svg" alt="" width="18" height="18" loading="lazy">GitHub</a>
-          <a class="btn ghost" href="https://www.linkedin.com/in/shamir-delgado-lanuza-0b7274314"><img class="contact-icon logo-badge" src="img/contacto/linkedin.svg" alt="" width="18" height="18" loading="lazy">LinkedIn</a>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <picture class="footer-pokemon" aria-hidden="true"><source media="(prefers-reduced-motion: reduce)" srcset="img/gengar1.png"><img src="img/gengar-footer.gif" alt="" width="72" height="81" loading="lazy"></picture>
-      <span data-es="Hecho a mano con HTML, CSS y JavaScript." data-en="Handmade with HTML, CSS and JavaScript.">Hecho a mano con HTML, CSS y JavaScript.</span>
-    </footer>
-  </div>
-
-
-  <!-- El filtro hace transparente el negro al mostrar las poses; no modifica el JPG. -->
-  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><defs><filter id="pokemon-remove-black" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  1 1 1 0 0"/><feComponentTransfer><feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1"/></feComponentTransfer></filter><filter id="pokemon-remove-white" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 3 0"/><feComponentTransfer><feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1"/></feComponentTransfer></filter></defs></svg>
-  <script>
-    /* ---------- Cambio de idioma ----------
-       Recorre todos los elementos que tienen data-es / data-en y les pone el texto del idioma elegido. */
-    const langBtn = document.getElementById("langBtn");
-    let lang = "es";
-
-    function setLang(l) {
-      lang = l;
-      document.documentElement.lang = l;                 // avisa al navegador el idioma de la página
-      document.querySelectorAll("[data-es]").forEach(el => {
-        el.textContent = el.dataset[l];                   // dataset.es o dataset.en
-      });
-      langBtn.textContent = l === "es" ? "EN" : "ES";     // el botón muestra el idioma al que vas a cambiar
-      paintTheme();
-    }
-    langBtn.addEventListener("click", () => setLang(lang === "es" ? "en" : "es"));
-
-    /* ---------- Tema día / noche ----------
-       Cambiamos el atributo data-theme de <html>; el CSS hace el resto (mira "html[data-theme="night"]" arriba).
-       Lo guardamos en localStorage para que la próxima vez se acuerde. */
-    const themeBtn = document.getElementById("themeBtn");
-    const knob = document.getElementById("knob");
-
-    function paintTheme() {
-      const night = document.documentElement.dataset.theme === "night";
-      themeBtn.setAttribute("aria-checked", String(night));
-      document.getElementById("themeBall").src = night ? "img/ultraball.webp" : "img/honorball.png";
-      themeBtn.setAttribute("aria-label", lang === "en" ? (night ? "Activate day theme" : "Activate night theme") : (night ? "Activar tema día" : "Activar tema noche"));
-    }
-    themeBtn.addEventListener("click", () => {
-      const next = document.documentElement.dataset.theme === "night" ? "day" : "night";
-      document.documentElement.dataset.theme = next;
-      try { localStorage.setItem("tema", next); } catch (e) {}
-      paintTheme();
-    });
-    paintTheme();
-
-    /* ---------- Skills que se voltean ----------
-       Cada click cambia aria-pressed entre "true" y "false"; el CSS usa ese valor para girar la carta. */
-    document.querySelectorAll(".skill").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const on = btn.getAttribute("aria-pressed") === "true";
-        btn.setAttribute("aria-pressed", String(!on));
-      });
-    });
-
-    /* ---------- Efecto de la carta ----------
-       Calcula dónde está el mouse/dedo dentro de la carta y la inclina un poco hacia ese lado. */
-    const card = document.getElementById("card");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    function tilt(e) {
-      if (reduceMotion) return;
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width;           // 0 a 1 de izquierda a derecha
-      const y = (e.clientY - r.top) / r.height;           // 0 a 1 de arriba a abajo
-      card.style.setProperty("--mx", (x * 100) + "%");    // mueve el brillo
-      card.style.setProperty("--my", (y * 100) + "%");
-      card.style.transform = `rotateY(${(x - 0.5) * 18}deg) rotateX(${(0.5 - y) * 18}deg)`;
-    }
-    function reset() {
-      card.style.transform = "";
-      card.style.setProperty("--mx", "50%");
-      card.style.setProperty("--my", "50%");
-    }
-    card.addEventListener("pointermove", tilt);           // pointer = mouse y dedo con el mismo código
-    card.addEventListener("pointerleave", reset);
-    card.addEventListener("pointerup", reset);
-
-    /* ---------- Fondo de sprites ----------
-       Cada sprite tiene una "profundidad" (depth): los de depth alto se mueven y giran más rápido con el scroll,
-       y eso da sensación de 3D. Cuando uno sale por arriba, reaparece por abajo (por eso usamos el módulo %). */
-    const bg = document.getElementById("bg");
-    // [imagen, posición horizontal en %, posición vertical inicial en px, ancho en px, depth]
-    const specs = [
-      ["gengar3", 4, 80, 80, .30], ["pose-haunter", 14, 420, 100, .55], ["gengar2", 30, 640, 70, .22],
-      ["pose-gastly", 46, 180, 82, .40], ["gengar4", 62, 560, 104, .65], ["gastly4", 74, 60, 70, .28],
-      ["gengar1", 84, 330, 90, .50], ["pose-gengar", 88, 700, 95, .35], ["gastly3", 22, 260, 56, .18],
-      ["pose-haunter", 54, 760, 84, .45], ["gastly2", 7, 590, 62, .24], ["pose-gengar", 78, 220, 78, .32]
-    ];
-    const sprites = specs.map(([name, x, y, w, d], i) => {
-      const sheet = name.startsWith("pose-");
-      const el = document.createElement(sheet ? "span" : "img");
-      if (sheet) {
-        el.className = "sprite-sheet";
-        const viewport = document.createElement("span");
-        viewport.className = "pose-window " + name;
-        const img = document.createElement("img");
-        img.src = "img/pokemon-poses.jpg";
-        img.alt = "";
-        viewport.appendChild(img);
-        el.appendChild(viewport);
-      } else {
-        el.src = "img/" + name + ".png";
-        el.alt = "";
-      }
-      el.setAttribute("aria-hidden", "true");
-      el.style.left = x + "%";
-      el.style.setProperty("--s", w + "px");
-      bg.appendChild(el);
-      return { el, y, d, i };
-    });
-
-    function drawBg() {
-      const sy = reduceMotion ? 0 : window.scrollY;
-      const H = window.innerHeight + 200;                     // alto del "carril" donde viajan los sprites
-      sprites.forEach(c => {
-        const ty = (((c.y - sy * c.d) % H) + H) % H - 100;    // sube con el scroll y da la vuelta
-        const dir = c.i % 2 ? 1 : -1;
-        c.el.style.transform =
-          `translate3d(0, ${ty}px, 0) rotateX(${sy * .04 * c.d * dir}deg) rotateY(${sy * .07 * c.d}deg) rotateZ(${(c.i * 37 % 30) - 15}deg)`;
-      });
-    }
-    let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { drawBg(); ticking = false; });   // dibuja máximo 1 vez por cuadro
-    }, { passive: true });
-    window.addEventListener("resize", drawBg);
-    drawBg();
-
-    /* Cursor animado solo con mouse: conserva el cursor normal si no carga. */
-    const cursorMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const gifCursor = document.createElement("span");
-    gifCursor.className = "gif-cursor";
-    gifCursor.hidden = true;
-    gifCursor.setAttribute("aria-hidden", "true");
-    const cursorImage = document.createElement("img");
-    cursorImage.alt = "";
-    cursorImage.width = 48;
-    cursorImage.height = 40;
-    gifCursor.appendChild(cursorImage);
-    document.body.appendChild(gifCursor);
-    let cursorRequested = false;
-    let cursorFrame = 0;
-    let cursorX = 0;
-    let cursorY = 0;
-    const hideGifCursor = () => {
-      gifCursor.hidden = true;
-      gifCursor.classList.remove("is-grabbing");
-      document.documentElement.classList.remove("gif-cursor-active");
-    };
-    cursorImage.addEventListener("error", hideGifCursor);
-    document.addEventListener("pointermove", event => {
-      if (event.pointerType !== "mouse" || !finePointer.matches || cursorMotion.matches) { hideGifCursor(); return; }
-      if (!cursorRequested) { cursorRequested = true; cursorImage.src = "img/haunter-cursor.gif"; }
-      if (!cursorImage.complete || !cursorImage.naturalWidth) return;
-      cursorX = event.clientX - 7;
-      cursorY = event.clientY - 27;
-      if (cursorFrame) return;
-      cursorFrame = requestAnimationFrame(() => {
-        cursorFrame = 0;
-        if (!finePointer.matches || cursorMotion.matches || !document.hasFocus()) return;
-        gifCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-        gifCursor.hidden = false;
-        document.documentElement.classList.add("gif-cursor-active");
-      });
-    }, { passive: true });
-    document.addEventListener("pointerdown", event => { if (event.pointerType === "mouse") gifCursor.classList.add("is-grabbing"); });
-    document.addEventListener("pointerup", () => gifCursor.classList.remove("is-grabbing"));
-    document.addEventListener("pointerout", event => { if (!event.relatedTarget) hideGifCursor(); });
-    window.addEventListener("blur", hideGifCursor);
-    window.addEventListener("pagehide", hideGifCursor);
-    cursorMotion.addEventListener("change", hideGifCursor);
-    finePointer.addEventListener("change", hideGifCursor);
-
-  </script>
-</body>
+    <!-- Transparencia de las poses y del cursor sin modificar las imágenes. -->
+    <svg
+      width="0"
+      height="0"
+      aria-hidden="true"
+      focusable="false"
+      style="position: absolute"
+    >
+      <defs>
+        <filter id="pokemon-remove-black" color-interpolation-filters="sRGB">
+          <feColorMatrix
+            type="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  1 1 1 0 0"
+          />
+          <feComponentTransfer>
+            <feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1" />
+          </feComponentTransfer>
+        </filter>
+        <filter id="pokemon-remove-white" color-interpolation-filters="sRGB">
+          <feColorMatrix
+            type="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 3 0"
+          />
+          <feComponentTransfer>
+            <feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1" />
+          </feComponentTransfer>
+        </filter>
+      </defs>
+    </svg>
+    <script src="script.js"></script>
+  </body>
 </html>
