@@ -20,6 +20,7 @@
     });
     document.querySelectorAll('.details-toggle').forEach(updateDetailsButton);
     languageButton.setAttribute('aria-label', language === 'es' ? 'Switch to English' : 'Cambiar a español');
+    document.querySelectorAll('[data-count-to]').forEach(formatCount);
     updateThemeButton();
   }
 
@@ -102,6 +103,69 @@
     if (event.key !== 'Escape' || projectsMenu.hidden) return;
     toggleProjects(false);
     projectsButton.focus();
+  });
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const countValues = new WeakMap();
+  const countFrames = new Map();
+
+  function formatCount(element) {
+    const decimals = Number(element.dataset.countTo) % 1 ? 1 : 0;
+    element.textContent = new Intl.NumberFormat(language, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(countValues.get(element) ?? Number(element.dataset.countTo));
+    const before = element.parentElement.firstElementChild;
+    before.textContent = new Intl.NumberFormat(language, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(Number(element.dataset.countFrom)) + (element.dataset.countUnit ? ' ' + element.dataset.countUnit : '');
+  }
+
+  function animateCount(element) {
+    const from = Number(element.dataset.countFrom);
+    const to = Number(element.dataset.countTo);
+    if (reducedMotion.matches) return;
+    let start;
+    function tick(now) {
+      start ??= now;
+      const progress = Math.min((now - start) / 1000, 1);
+      countValues.set(element, from + (to - from) * (1 - (1 - progress) ** 3));
+      formatCount(element);
+      if (progress < 1) countFrames.set(element, requestAnimationFrame(tick));
+      else countFrames.delete(element);
+    }
+    countFrames.set(element, requestAnimationFrame(tick));
+  }
+
+  if ('IntersectionObserver' in window) {
+    const metricObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting || !target.closest('.project-details').classList.contains('is-open')) return;
+        animateCount(target.querySelector('[data-count-to]'));
+        metricObserver.unobserve(target);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.case-metric').forEach((metric) => metricObserver.observe(metric));
+
+    const steps = document.querySelector('.work-steps');
+    steps.classList.add('will-reveal');
+    const stepObserver = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      steps.classList.add('is-visible');
+      stepObserver.disconnect();
+    }, { threshold: 0.15 });
+    stepObserver.observe(steps);
+  }
+
+  reducedMotion.addEventListener('change', () => {
+    if (!reducedMotion.matches) return;
+    countFrames.forEach((frame, element) => {
+      cancelAnimationFrame(frame);
+      countValues.delete(element);
+      formatCount(element);
+    });
+    countFrames.clear();
   });
 
   // La barra se marca un poco más cuando ya hay contenido detrás.

@@ -149,9 +149,6 @@ document.documentElement.dataset.theme = theme;
               <a href="https://shamirdelgado.github.io/courier-demo/" target="_blank" rel="noopener noreferrer">
                 <b>Courier Demo</b><span>Demo ↗</span>
               </a>
-              <a href="#finanzas">
-                <b data-es="Gestor de finanzas" data-en="Finance manager">Gestor de finanzas</b><span data-es="Planificado" data-en="Planned">Planificado</span>
-              </a>
               <a class="todos" href="#proyectos"><span data-es="Ver todos en esta página →" data-en="See all on this page →">Ver todos en esta página →</span></a>
             </div>
           </div>
@@ -224,6 +221,39 @@ document.documentElement.dataset.theme = theme;
             <span class="status" data-es="Proyecto destacado" data-en="Featured project">Proyecto destacado</span>
             <h3>Pokiot</h3>
             <p class="lead" data-es="Tu colección de cartas Pokémon en una experiencia web 3D." data-en="Your Pokémon card collection in a 3D web experience.">Tu colección de cartas Pokémon en una experiencia web 3D.</p>
+
+            <div class="project-links">
+              <a class="btn primary" href="https://pokiot.vercel.app" target="_blank" rel="noopener noreferrer"><span  data-es="Ver en vivo ↗" data-en="View live ↗">Ver en vivo ↗</span></a>
+              <span class="private" data-es="Código privado" data-en="Private source">Código privado</span>
+              <button class="btn ghost details-toggle" type="button" aria-expanded="false" aria-controls="pokiot-details" data-es="Ver detalles" data-en="View details">Ver detalles</button>
+            </div>
+          </div>
+          <div class="project-details" id="pokiot-details" inert><div><div class="case-study">
+            <h4 data-es="Qué es" data-en="What it is">Qué es</h4>
+            <p data-es="Rastreador de cartas Pokémon con una experiencia 3D: universo de partículas con shaders propios, carta y familia del día generadas a diario por un pipeline en Python con GitHub Actions, escáner de cartas físicas en el navegador (OCR con Tesseract.js + huella perceptual) y cuentas con Supabase (PostgreSQL con Row Level Security)." data-en="A Pokémon card tracker with a 3D experience: a particle universe with custom shaders, a daily card and family generated every day by a Python pipeline with GitHub Actions, a physical card scanner in the browser (Tesseract.js OCR + perceptual hashing), and Supabase accounts (PostgreSQL with Row Level Security).">Rastreador de cartas Pokémon con una experiencia 3D: universo de partículas con shaders propios, carta y familia del día generadas a diario por un pipeline en Python con GitHub Actions, escáner de cartas físicas en el navegador (OCR con Tesseract.js + huella perceptual) y cuentas con Supabase (PostgreSQL con Row Level Security).</p>
+            <h4 data-es="Resultados medidos" data-en="Measured results">Resultados medidos</h4>
+            <div class="case-metrics">
+            <div class="case-metric">
+            <p class="metric-label" data-es="Carga inicial" data-en="Initial load">Carga inicial</p>
+            <span class="metric-value"><span>981 KB</span> <span class="metric-arrow">→</span> <span data-count-from="981" data-count-to="396" data-count-unit="KB">396</span> KB</span>
+            <p data-es="Separé Supabase y el 3D en módulos que se cargan aparte." data-en="I split Supabase and 3D into separately loaded modules.">Separé Supabase y el 3D en módulos que se cargan aparte.</p>
+            </div>
+            <div class="case-metric">
+            <p class="metric-label" data-es="Celular" data-en="Mobile">Celular</p>
+            <span class="metric-value"><span>6</span> <span class="metric-arrow">→</span> <span data-count-from="6" data-count-to="60">60</span> FPS</span>
+            <p data-es="En las escenas más pesadas." data-en="In the heaviest scenes.">En las escenas más pesadas.</p>
+            </div>
+            <div class="case-metric">
+            <p class="metric-label" data-es="Recorrido en celular" data-en="Mobile page length">Recorrido en celular</p>
+            <span class="metric-value"><span>14,5</span> <span class="metric-arrow">→</span> <span data-count-from="14.5" data-count-to="6.7">6,7</span></span>
+            <span class="metric-unit" data-es="pantallas" data-en="screens">pantallas</span>
+            <p data-es="Sin quitar animaciones." data-en="Without removing animations.">Sin quitar animaciones.</p>
+            </div>
+            </div>
+            <h4 data-es="Depurando un congelón" data-en="Debugging a freeze">Depurando un congelón</h4>
+            <p><span data-es="En celular, la consola 3D del día desaparecía y la página se trababa unos segundos. Con perfiles de CPU encontré que Three.js revisaba cada shader recién compilado (" data-en="On mobile, the daily 3D console would disappear and the page would freeze for a few seconds. CPU profiles showed that Three.js checked every newly compiled shader (">En celular, la consola 3D del día desaparecía y la página se trababa unos segundos. Con perfiles de CPU encontré que Three.js revisaba cada shader recién compilado (</span><code>getShaderInfoLog</code><span data-es="), lo que obliga al navegador a esperar la compilación en el hilo principal. Lo resolví desactivando esa revisión en producción, compilando la escena en segundo plano (" data-en="), forcing the browser to wait for compilation on the main thread. I fixed it by disabling that check in production, compiling the scene in the background (">), lo que obliga al navegador a esperar la compilación en el hilo principal. Lo resolví desactivando esa revisión en producción, compilando la escena en segundo plano (</span><code>compileAsync</code><span data-es=") una pantalla antes de que aparezca y reutilizando el mapa de entorno." data-en=") one screen before it appeared, and reusing the environment map.">) una pantalla antes de que aparezca y reutilizando el mapa de entorno.</span></p>
+            <p data-es="Antes, un renderer por ficha agotaba los contextos WebGL de iPhone tras abrir varias cartas: pasé a un único renderer compartido." data-en="Previously, one renderer per card exhausted the iPhone’s WebGL contexts after opening several cards: I switched to a single shared renderer.">Antes, un renderer por ficha agotaba los contextos WebGL de iPhone tras abrir varias cartas: pasé a un único renderer compartido.</p>
+            <h4>Stack</h4>
             <div class="tags">
             <span>React 19</span>
             <span>Vite</span>
@@ -234,20 +264,7 @@ document.documentElement.dataset.theme = theme;
             <span>GitHub Actions</span>
             <span>Vercel</span>
           </div>
-            <div class="project-links">
-              <a class="btn primary" href="https://pokiot.vercel.app" target="_blank" rel="noopener noreferrer"><span  data-es="Ver en vivo ↗" data-en="View live ↗">Ver en vivo ↗</span></a>
-              <span class="private" data-es="Código privado" data-en="Private source">Código privado</span>
-              <button class="btn ghost details-toggle" type="button" aria-expanded="false" aria-controls="pokiot-details" data-es="Ver detalles" data-en="View details">Ver detalles</button>
-            </div>
-          </div>
-          <div class="project-details" id="pokiot-details" inert><div><ul class="features">
-            <li data-es="Universo 3D de partículas con shaders propios en Three.js. Este fondo viene de ahí." data-en="3D particle universe with custom Three.js shaders. This background comes from it.">Universo 3D de partículas con shaders propios en Three.js. Este fondo viene de ahí.</li>
-            <li data-es="Carta del día y familias evolutivas en 3D, generadas a diario por un pipeline en Python con GitHub Actions y despliegue continuo en Vercel." data-en="Daily card and 3D evolution families, generated every day by a Python pipeline with GitHub Actions and continuous deployment on Vercel.">Carta del día y familias evolutivas en 3D, generadas a diario por un pipeline en Python con GitHub Actions y despliegue continuo en Vercel.</li>
-            <li data-es="Escáner en el navegador: OCR con Tesseract.js y huella perceptual dHash para reconocer cartas físicas. Nada sale del dispositivo." data-en="Browser card scanner: Tesseract.js OCR and dHash perceptual hashing recognize physical cards. Nothing leaves the device.">Escáner en el navegador: OCR con Tesseract.js y huella perceptual dHash para reconocer cartas físicas. Nada sale del dispositivo.</li>
-            <li data-es="Cuentas con Supabase: PostgreSQL, Row Level Security y funciones seguras. Valor de la colección con historial de precios." data-en="Supabase accounts: PostgreSQL, Row Level Security and secure functions. Collection value with price history.">Cuentas con Supabase: PostgreSQL, Row Level Security y funciones seguras. Valor de la colección con historial de precios.</li>
-            <li data-es="9 regiones jugables en pixel art donde caminas como tu Pokémon." data-en="9 playable pixel art regions where you walk as your Pokémon.">9 regiones jugables en pixel art donde caminas como tu Pokémon.</li>
-            <li data-es="Diseño, arquitectura y revisión propios; IA como asistente para acelerar la implementación. Cada cambio pasa por pruebas, lint y verificación visual automatizada." data-en="My own design, architecture and review; AI as an assistant to speed up implementation. Every change goes through tests, lint and automated visual checks.">Diseño, arquitectura y revisión propios; IA como asistente para acelerar la implementación. Cada cambio pasa por pruebas, lint y verificación visual automatizada.</li>
-          </ul><p class="origin" data-es="Empezó como una app de consola en Python + SQLite." data-en="It started as a Python + SQLite console app.">Empezó como una app de consola en Python + SQLite.</p></div></div>
+          </div></div></div>
         </article>
         <article class="project project-demo">
           <div class="browser-frame"><div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="img/proyectos/courier.webp" width="1200" height="750" decoding="async" loading="lazy" alt="Captura de Courier Demo, casillero de compras de EE. UU. a Costa Rica" data-es-alt="Captura de Courier Demo, casillero de compras de EE. UU. a Costa Rica" data-en-alt="Screenshot of Courier Demo, a US to Costa Rica shopping forwarding service" /></div>
@@ -267,19 +284,18 @@ document.documentElement.dataset.theme = theme;
             <li  data-es="Datos y funciones simulados para explorar el servicio." data-en="Simulated data and features to explore the service.">Datos y funciones simulados para explorar el servicio.</li>
           </ul></div></div>
         </article>
-        <article id="finanzas" class="project planned">
-          <span class="status" data-es="Planificado" data-en="Planned">Planificado</span>
-          <h3 data-es="Gestor de finanzas personales" data-en="Personal finance manager">Gestor de finanzas personales</h3>
-          <p class="lead" data-es="Ingresos, gastos y presupuestos en un solo lugar." data-en="Income, expenses and budgets in one place.">Ingresos, gastos y presupuestos en un solo lugar.</p>
-          <div class="tags"><span>React</span><span>TypeScript</span><span>Python</span><span>FastAPI</span><span>PostgreSQL</span></div>
-          <div class="project-links"><button class="btn ghost details-toggle" type="button" aria-expanded="false" aria-controls="finanzas-details" data-es="Ver detalles" data-en="View details">Ver detalles</button></div>
-          <div class="project-details" id="finanzas-details" inert><div><ul class="features">
-            <li  data-es="Alcance planificado: resumen mensual con gráficos, filtros por fecha y exportación a CSV." data-en="Planned scope: monthly summary with charts, date filters and CSV export.">Alcance planificado: resumen mensual con gráficos, filtros por fecha y exportación a CSV.</li>
-          </ul></div></div>
-        </article>
       </section>
+        <section id="como-trabajo">
+          <h2 data-es="02 / Cómo trabajo" data-en="02 / How I work">02 / Cómo trabajo</h2>
+          <ol class="work-steps">
+            <li><span class="step-number">01</span><h3 data-es="Defino" data-en="Define">Defino</h3><p data-es="Antes de escribir código, decido qué debe pasar y cómo voy a comprobarlo." data-en="Before writing code, I decide what should happen and how I will verify it.">Antes de escribir código, decido qué debe pasar y cómo voy a comprobarlo.</p></li>
+            <li><span class="step-number">02</span><h3 data-es="Construyo con IA como apoyo" data-en="Build with AI support">Construyo con IA como apoyo</h3><p data-es="Uso asistentes (Claude Code, Codex) para acelerar la implementación; la arquitectura y las decisiones son mías." data-en="I use assistants (Claude Code, Codex) to speed up implementation; the architecture and decisions are mine.">Uso asistentes (Claude Code, Codex) para acelerar la implementación; la arquitectura y las decisiones son mías.</p></li>
+            <li><span class="step-number">03</span><h3 data-es="Reviso todo" data-en="Review everything">Reviso todo</h3><p data-es="Leo cada cambio, descarto lo que no me convence y no subo nada que no entienda." data-en="I read every change, discard what I’m not convinced by, and never push anything I don’t understand.">Leo cada cambio, descarto lo que no me convence y no subo nada que no entienda.</p></li>
+            <li><span class="step-number">04</span><h3 data-es="Lo pruebo de verdad" data-en="Test it properly">Lo pruebo de verdad</h3><p data-es="Pruebas automáticas, lint y capturas en computador y celular antes de publicar; si algo falla, mido antes de arreglar." data-en="Automated tests, lint, and screenshots on desktop and mobile before publishing; if something fails, I measure before fixing it.">Pruebas automáticas, lint y capturas en computador y celular antes de publicar; si algo falla, mido antes de arreglar.</p></li>
+          </ol>
+        </section>
         <section id="skills">
-          <h2 data-es="02 / Skills" data-en="02 / Skills">02 / Skills</h2>
+          <h2 data-es="03 / Skills" data-en="03 / Skills">03 / Skills</h2>
           <div class="skill-groups">
             <div class="skill-group">
               <h3 data-es="Frontend" data-en="Frontend">Frontend</h3>
@@ -397,14 +413,16 @@ document.documentElement.dataset.theme = theme;
           </div>
         </section>
         <section id="sobre-mi">
-          <h2 data-es="03 / Sobre mí" data-en="03 / About me">03 / Sobre mí</h2>
+          <h2 data-es="04 / Sobre mí" data-en="04 / About me">04 / Sobre mí</h2>
           <div class="about">
             <p  data-es="Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica." data-en="I study Systems Engineering at Universidad Latina de Costa Rica.">Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica.</p>
             <p  data-es="Conecto interfaces, lógica y datos para construir productos completos." data-en="I connect interfaces, logic and data to build complete products.">Conecto interfaces, lógica y datos para construir productos completos.</p>
+            <p data-es="Español (nativo) · Inglés (B2)" data-en="Spanish (native) · English (B2)">Español (nativo) · Inglés (B2)</p>
           </div>
         </section>
+        <section id="trayectoria" hidden></section>
         <section id="contacto">
-          <h2 data-es="04 / Contacto" data-en="04 / Contact">04 / Contacto</h2>
+          <h2 data-es="05 / Contacto" data-en="05 / Contact">05 / Contacto</h2>
           <p class="contact-title" data-es="¿Construimos algo?" data-en="Let’s build something.">¿Construimos algo?</p>
           <div class="contact-links">
             <a class="btn primary" href="mailto:uzziellanuza@gmail.com">
