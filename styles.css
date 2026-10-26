@@ -22,7 +22,7 @@ html[data-theme=night] {
 }
 html {
   scroll-behavior:smooth;
-  scroll-padding-top:2rem
+  scroll-padding-top:100px
 }
 body {
   margin:0;
@@ -84,18 +84,31 @@ p {
   color:var(--muted)
 }
 .top {
-  position:relative;
+  position:sticky;
+  top:14px;
+  z-index:20;
   display:flex;
   align-items:center;
-  gap:32px;
-  min-height:96px;
-  border-bottom:1px solid var(--line)
+  gap:20px;
+  min-height:64px;
+  margin-top:14px;
+  padding:10px 12px 10px 14px;
+  background:color-mix(in srgb,var(--panel) 72%,transparent);
+  border:1px solid var(--line);
+  border-radius:20px;
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);
+  backdrop-filter:blur(14px) saturate(1.4);
+  transition:box-shadow .3s,border-color .3s
+}
+.top.flotando {
+  border-color:color-mix(in srgb,var(--accent) 35%,var(--line));
+  box-shadow:0 14px 40px -18px #000a
 }
 .logo {
   display:flex;
   align-items:center;
   gap:10px;
-  font-size:23px;
+  font-size:21px;
   font-weight:700
 }
 .logo img {
@@ -103,26 +116,140 @@ p {
 }
 .top nav {
   display:flex;
-  gap:26px;
+  gap:22px;
   margin-left:auto;
-  order:1
+  font-size:15px
 }
 .top nav a:hover {
   color:var(--accent)
 }
+.atajos {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding-left:14px;
+  border-left:1px solid var(--line)
+}
+.icono {
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  padding:0;
+  background:none;
+  border:1px solid transparent;
+  border-radius:11px;
+  color:var(--muted);
+  transition:color .2s,background .2s,border-color .2s,transform .2s
+}
+.icono svg,#menuBtn svg {
+  width:19px;
+  height:19px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round
+}
+.icono:hover,.icono[aria-expanded="true"] {
+  color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 30%,transparent);
+  transform:translateY(-1px)
+}
+/* Nombre del ícono al pasar el mouse; en táctil no hace falta. */
+@media(hover:hover) {
+  .icono::after {
+    content:attr(aria-label);
+    position:absolute;
+    top:calc(100% + 10px);
+    left:50%;
+    padding:4px 8px;
+    background:var(--ink);
+    color:var(--bg);
+    border-radius:6px;
+    font:11px var(--mono);
+    white-space:nowrap;
+    opacity:0;
+    pointer-events:none;
+    transform:translate(-50%,-4px);
+    transition:opacity .15s,transform .15s
+  }
+  .icono:hover::after {
+    opacity:1;
+    transform:translate(-50%,0)
+  }
+  .icono[aria-expanded="true"]::after {
+    display:none
+  }
+}
+.rapidos {
+  position:relative
+}
+.popover {
+  position:absolute;
+  top:calc(100% + 14px);
+  right:-6px;
+  width:280px;
+  padding:8px;
+  background:color-mix(in srgb,var(--bg) 94%,var(--accent));
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:0 20px 50px -20px #000b;
+  animation:abrir .18s ease-out
+}
+.popover[hidden] {
+  display:none
+}
+@keyframes abrir {
+  from { opacity:0; transform:translateY(-6px) scale(.98) }
+}
+.popover-titulo {
+  margin:4px 10px 6px;
+  font:11px var(--mono);
+  color:var(--muted)
+}
+.popover a {
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:12px;
+  padding:10px;
+  border-radius:9px;
+  font-size:15px
+}
+.popover a b {
+  font:600 15px Figtree,sans-serif;
+  white-space:nowrap
+}
+.popover a span {
+  font:11px var(--mono);
+  color:var(--muted)
+}
+.popover a:hover {
+  background:color-mix(in srgb,var(--accent) 12%,transparent)
+}
+.popover a:hover b {
+  color:var(--accent)
+}
+.popover .todos {
+  margin-top:4px;
+  border-top:1px solid var(--line);
+  border-radius:0 0 9px 9px
+}
 .controls {
   display:flex;
-  gap:8px;
-  order:2
+  gap:6px
 }
 .controls button {
   display:grid;
   place-items:center;
-  min-width:44px;
-  height:44px;
+  min-width:38px;
+  height:38px;
   background:var(--panel);
   border:1px solid var(--line);
-  border-radius:8px;
+  border-radius:11px;
   font-size:12px
 }
 .controls img {
@@ -422,20 +549,44 @@ footer {
     padding:0 20px
   }
   .top {
-    min-height:80px;
-    gap:12px
+    top:10px;
+    gap:6px;
+    min-height:56px;
+    margin:10px -8px 0;
+    padding:8px
+  }
+  .logo span {
+    display:none
+  }
+  .atajos {
+    gap:2px;
+    margin-left:auto;
+    padding-left:0;
+    border:0
+  }
+  .icono,.controls button {
+    width:34px;
+    min-width:34px;
+    height:34px
   }
   .controls {
-    margin-left:auto
+    gap:4px
   }
   #menuBtn {
-    display:grid;
-    padding:0 12px
+    display:grid
+  }
+  .rapidos {
+    position:static
+  }
+  .popover {
+    left:8px;
+    right:8px;
+    width:auto
   }
   .top nav {
     display:none;
     position:absolute;
-    top:72px;
+    top:calc(100% + 10px);
     right:0;
     z-index:5;
     min-width:200px;

@@ -12,7 +12,9 @@
       element.textContent = element.dataset[language];
     });
     languageButton.textContent = language === 'es' ? 'EN' : 'ES';
-    menuButton.textContent = language === 'es' ? 'Menú' : 'Menu';
+    document.querySelectorAll('[data-es-label]').forEach((element) => {
+      element.setAttribute('aria-label', element.dataset[language + 'Label']);
+    });
     updateThemeButton();
   }
 
@@ -54,4 +56,31 @@
     menu.classList.remove('open');
     menuButton.setAttribute('aria-expanded', 'false');
   });
+
+  const projectsButton = document.getElementById('proyectosBtn');
+  const projectsMenu = document.getElementById('proyectosMenu');
+
+  function toggleProjects(open) {
+    projectsMenu.hidden = !open;
+    projectsButton.setAttribute('aria-expanded', String(open));
+  }
+
+  projectsButton.addEventListener('click', () => toggleProjects(projectsMenu.hidden));
+  projectsMenu.addEventListener('click', (event) => {
+    if (event.target.closest('a')) toggleProjects(false);
+  });
+  document.addEventListener('click', (event) => {
+    if (!projectsMenu.hidden && !event.target.closest('.rapidos')) toggleProjects(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || projectsMenu.hidden) return;
+    toggleProjects(false);
+    projectsButton.focus();
+  });
+
+  // La barra se marca un poco más cuando ya hay contenido detrás.
+  const bar = document.getElementById('barra');
+  const markBar = () => bar.classList.toggle('flotando', window.scrollY > 24);
+  window.addEventListener('scroll', markBar, { passive: true });
+  markBar();
 })();

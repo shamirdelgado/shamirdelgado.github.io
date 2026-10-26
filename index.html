@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Shamir Delgado | Full-stack junior · Web y 3D</title>
+    <title>Shamir Delgado | Full-stack junior · Web, 3D e IA aplicada</title>
     <meta
     name="description"
-    content="Shamir Delgado, desarrollador full-stack junior en Costa Rica. Web y 3D. Disponible para trabajo remoto."
+    content="Shamir Delgado, desarrollador full-stack junior en Costa Rica. Web, 3D e IA aplicada. Disponible para trabajo remoto."
     />
     <meta property="og:title" content="Shamir Delgado | Full-stack junior" />
     <meta property="og:description" content="Productos web y experiencias 3D. Conoce Pokiot. Disponible para trabajo remoto." />
@@ -44,34 +44,56 @@ document.documentElement.dataset.theme = theme;
     <canvas id="universo" aria-hidden="true">
     </canvas>
     <div class="wrap">
-      <header class="top">
+      <header class="top" id="barra">
         <a class="logo" href="#inicio" aria-label="Shamir Delgado">
-          <img src="img/icon.png" alt="" width="40" height="40"/>
-          <span>sd<span class="accent">.</span>
-        </span>
-      </a>
-      <div class="controls">
-        <button id="menuBtn" aria-expanded="false" aria-controls="menu" type="button">Menú</button>
-        <button id="langBtn" type="button" aria-label="Change language">EN</button>
-        <button id="themeBtn" type="button" role="switch" aria-checked="false" aria-label="Tema">
-          <img id="themeBall" src="img/honorball.png" width="24" height="24" alt=""/>
-        </button>
-      </div>
-      <nav id="menu" aria-label="Principal">
-        <a href="#proyectos">
-          <span data-es="Proyectos" data-en="Projects">Proyectos</span>
+          <img src="img/icon.png" alt="" width="36" height="36"/>
+          <span>sd<span class="accent">.</span></span>
         </a>
-        <a href="#skills">
-          <span data-es="Skills" data-en="Skills">Skills</span>
-        </a>
-        <a href="#sobre-mi">
-          <span data-es="Sobre mí" data-en="About">Sobre mí</span>
-        </a>
-        <a href="#contacto">
-          <span data-es="Contacto" data-en="Contact">Contacto</span>
-        </a>
-      </nav>
-    </header>
+        <nav id="menu" aria-label="Principal">
+          <a href="#proyectos"><span data-es="Proyectos" data-en="Projects">Proyectos</span></a>
+          <a href="#skills"><span data-es="Skills" data-en="Skills">Skills</span></a>
+          <a href="#sobre-mi"><span data-es="Sobre mí" data-en="About">Sobre mí</span></a>
+          <a href="#contacto"><span data-es="Contacto" data-en="Contact">Contacto</span></a>
+        </nav>
+        <div class="atajos">
+          <a class="icono" href="mailto:uzziellanuza@gmail.com" aria-label="Correo" data-es-label="Correo" data-en-label="Email">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          </a>
+          <a class="icono" href="https://www.linkedin.com/in/shamir-delgado-lanuza-0b7274314" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
+          </a>
+          <a class="icono" href="https://github.com/shamirdelgado" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5m12 4.5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          </a>
+          <div class="rapidos">
+            <button class="icono" id="proyectosBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="proyectosMenu" aria-label="Proyectos" data-es-label="Proyectos" data-en-label="Projects">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            </button>
+            <div class="popover" id="proyectosMenu" hidden>
+              <p class="popover-titulo">~/proyectos</p>
+              <a href="https://pokiot.vercel.app" target="_blank" rel="noopener noreferrer">
+                <b>Pokiot</b><span data-es="En vivo ↗" data-en="Live ↗">En vivo ↗</span>
+              </a>
+              <a href="https://shamirdelgado.github.io/courier-demo/" target="_blank" rel="noopener noreferrer">
+                <b>Courier Demo</b><span>Demo ↗</span>
+              </a>
+              <a href="#finanzas">
+                <b data-es="Gestor de finanzas" data-en="Finance manager">Gestor de finanzas</b><span data-es="Planificado" data-en="Planned">Planificado</span>
+              </a>
+              <a class="todos" href="#proyectos"><span data-es="Ver todos en esta página →" data-en="See all on this page →">Ver todos en esta página →</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="controls">
+          <button id="menuBtn" aria-expanded="false" aria-controls="menu" type="button" aria-label="Menú" data-es-label="Menú" data-en-label="Menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button id="langBtn" type="button" aria-label="Change language">EN</button>
+          <button id="themeBtn" type="button" role="switch" aria-checked="false" aria-label="Tema">
+            <img id="themeBall" src="img/honorball.png" width="22" height="22" alt=""/>
+          </button>
+        </div>
+      </header>
     <main id="inicio">
       <div class="hero">
         <div class="hero-copy">
@@ -79,8 +101,8 @@ document.documentElement.dataset.theme = theme;
           <p class="availability" data-es="● Disponible para trabajo remoto" data-en="● Available for remote work">● Disponible para trabajo remoto</p>
           <h1>Shamir<br/>Delgado<span class="accent">.</span>
           </h1>
-          <p class="role" data-es="Desarrollador full-stack junior · Web y 3D" data-en="Junior full-stack developer · Web &amp; 3D">Desarrollador full-stack junior · Web y 3D</p>
-          <p data-es="Construyo productos web completos, de la base de datos a la interfaz en 3D. Diseño la arquitectura, escribo y reviso el código." data-en="I build complete web products, from the database to the 3D interface. I design the architecture, write and review the code.">Construyo productos web completos, de la base de datos a la interfaz en 3D. Diseño la arquitectura, escribo y reviso el código.</p>
+          <p class="role" data-es="Desarrollador full-stack junior · Web, 3D e IA aplicada" data-en="Junior full-stack developer · Web, 3D &amp; applied AI">Desarrollador full-stack junior · Web, 3D e IA aplicada</p>
+          <p data-es="Construyo productos web completos, de la base de datos a la interfaz en 3D. Diseño la arquitectura, escribo y reviso el código, y uso IA donde de verdad acelera el trabajo." data-en="I build complete web products, from the database to the 3D interface. I design the architecture, write and review the code, and use AI where it genuinely speeds things up.">Construyo productos web completos, de la base de datos a la interfaz en 3D. Diseño la arquitectura, escribo y reviso el código, y uso IA donde de verdad acelera el trabajo.</p>
           <div class="actions">
             <a class="btn primary" href="#pokiot">
               <span data-es="Ver Pokiot ↗" data-en="Explore Pokiot ↗">Ver Pokiot ↗</span>
@@ -126,7 +148,7 @@ document.documentElement.dataset.theme = theme;
         <h2 data-es="01 / Proyectos" data-en="01 / Projects">01 / Proyectos</h2>
         <article id="pokiot" class="project featured">
           <div class="project-top">
-            <span class="eyebrow">01 — FULL-STACK / 3D</span>
+            <span class="eyebrow">01 — FULL-STACK / 3D / IA</span>
             <span class="status" data-es="Proyecto destacado" data-en="Featured project">Proyecto destacado</span>
           </div>
           <h3>Pokiot<span class="accent"> ↗</span>
@@ -138,7 +160,7 @@ document.documentElement.dataset.theme = theme;
             <li data-es="Escáner en el navegador: OCR con Tesseract.js y huella perceptual dHash para reconocer cartas físicas. Nada sale del dispositivo." data-en="Browser card scanner: Tesseract.js OCR and dHash perceptual hashing recognize physical cards. Nothing leaves the device.">Escáner en el navegador: OCR con Tesseract.js y huella perceptual dHash para reconocer cartas físicas. Nada sale del dispositivo.</li>
             <li data-es="Cuentas con Supabase: PostgreSQL, Row Level Security y funciones seguras. Valor de la colección con historial de precios." data-en="Supabase accounts: PostgreSQL, Row Level Security and secure functions. Collection value with price history.">Cuentas con Supabase: PostgreSQL, Row Level Security y funciones seguras. Valor de la colección con historial de precios.</li>
             <li data-es="9 regiones jugables en pixel art donde caminas como tu Pokémon." data-en="9 playable pixel art regions where you walk as your Pokémon.">9 regiones jugables en pixel art donde caminas como tu Pokémon.</li>
-            <li data-es="Diseño, arquitectura y revisión propios. Cada cambio pasa por pruebas, lint y verificación visual automatizada." data-en="My own design, architecture and review. Every change goes through tests, lint and automated visual checks.">Diseño, arquitectura y revisión propios. Cada cambio pasa por pruebas, lint y verificación visual automatizada.</li>
+            <li data-es="Diseño, arquitectura y revisión propios; IA como asistente para acelerar la implementación. Cada cambio pasa por pruebas, lint y verificación visual automatizada." data-en="My own design, architecture and review; AI as an assistant to speed up implementation. Every change goes through tests, lint and automated visual checks.">Diseño, arquitectura y revisión propios; IA como asistente para acelerar la implementación. Cada cambio pasa por pruebas, lint y verificación visual automatizada.</li>
           </ul>
           <div class="tags">
             <span>React 19</span>
@@ -202,7 +224,7 @@ document.documentElement.dataset.theme = theme;
             </p>
           </div>
         </article>
-        <article class="project">
+        <article id="finanzas" class="project">
           <div class="when">2026</div>
           <div>
             <h3>
@@ -298,7 +320,7 @@ document.documentElement.dataset.theme = theme;
               </div>
             </div>
             <div class="skill-group">
-              <h3 data-es="Desarrollo" data-en="Development">Desarrollo</h3>
+              <h3 data-es="Desarrollo e IA" data-en="Engineering &amp; AI">Desarrollo e IA</h3>
               <div class="skills">
                 <span>
                   <b data-es="diseño de software" data-en="software design">diseño de software</b>
@@ -310,7 +332,13 @@ document.documentElement.dataset.theme = theme;
                   <b data-es="revisión de código" data-en="code review">revisión de código</b>
                 </span>
                 <span>
-                  <b data-es="planificación" data-en="planning">planificación</b>
+                  <b>Claude Code</b>
+                </span>
+                <span>
+                  <b>Codex</b>
+                </span>
+                <span>
+                  <b>prompting</b>
                 </span>
               </div>
             </div>
