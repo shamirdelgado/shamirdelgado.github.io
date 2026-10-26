@@ -15,6 +15,9 @@
     document.querySelectorAll('[data-es-label]').forEach((element) => {
       element.setAttribute('aria-label', element.dataset[language + 'Label']);
     });
+    document.querySelectorAll('[data-href-es]').forEach((element) => {
+      element.href = element.dataset[language === 'es' ? 'hrefEs' : 'hrefEn'];
+    });
     document.querySelectorAll('[data-es-alt]').forEach((element) => {
       element.alt = element.dataset[language + 'Alt'];
     });
