@@ -225,7 +225,8 @@ async function cargarAtlas(generacion, signal) {
 
 export function crearUniverso({ escena, generacion, reducido }) {
   const abortar = new AbortController()
-  const total = window.innerWidth < 760 ? 1300 : 3500
+  const movil = window.innerWidth < 760 || matchMedia('(pointer: coarse)').matches
+  const total = movil ? (window.innerWidth < 760 ? 650 : 1750) : 3500
   const posiciones = new Float32Array(total * 3)
   const origenes = new Float32Array(total * 3)
   const azar = new Float32Array(total * 4)
@@ -365,6 +366,7 @@ export function crearUniverso({ escena, generacion, reducido }) {
 }
 
 // El DOM se mide en eventos, nunca en el bucle de animación.
+function iniciarUniverso() {
 const canvas = document.getElementById('universo');
 const card = document.getElementById('card');
 const hero = document.querySelector('.hero');
@@ -392,7 +394,7 @@ if (renderer) {
   }
   function ajustar() {
     ancho=innerWidth; alto=innerHeight;
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1,ancho<760?1:1.5));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1,ancho<760 || matchMedia('(pointer: coarse)').matches ? 1 : 1.5));
     renderer.setSize(ancho,alto,false);
     camara.aspect=ancho/alto;
     camara.fov=THREE.MathUtils.radToDeg(2*Math.atan(alto/3000));
@@ -403,7 +405,7 @@ if (renderer) {
     if(document.hidden || !visible || perdido) return;
     const delta=Math.min((ahora-(previo||ahora))/1000,.04); previo=ahora;
     if(!preferencia.matches) tiempo+=delta;
-    universo.actualizar({tiempo,delta,u:progreso,recorrido,ancho,alto,puntero,pixel:renderer.getPixelRatio(),cantidad:Math.round((ancho<760?350:950)*(1+Math.min(recorrido*.06,.3))),transicion});
+    universo.actualizar({tiempo,delta,u:progreso,recorrido,ancho,alto,puntero,pixel:renderer.getPixelRatio(),cantidad:Math.round(((ancho<760?350:950) * (ancho<760 || matchMedia('(pointer: coarse)').matches ? .5 : 1))*(1+Math.min(recorrido*.06,.3))),transicion});
     renderer.render(escena,camara);
   }
   function ciclo(ahora) {
@@ -435,4 +437,11 @@ if (renderer) {
   addEventListener('pagehide',()=>cancelAnimationFrame(frame));
   addEventListener('pageshow',reanudar);
   ajustar(); reanudar();
+}
+
+}
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(iniciarUniverso, { timeout: 2000 });
+} else {
+  setTimeout(iniciarUniverso, 200);
 }

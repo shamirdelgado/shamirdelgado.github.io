@@ -396,81 +396,56 @@ h2 {
   font-size:17px;
   font-family:var(--mono);
   font-weight:500;
-  margin:0 0 36px;
+  margin:0 0 32px;
   color:var(--muted)
 }
 .project {
-  padding:32px;
+  display:grid;
+  gap:24px;
+  min-width:0;
+  padding:24px;
   background:var(--panel);
   border:1px solid var(--line);
-  border-radius:12px;
-  margin-bottom:18px
+  border-radius:16px;
+  margin-bottom:24px
 }
-.project h3 {
-  font-size:28px;
-  margin:12px 0
-}
-.featured {
-  padding:42px;
-  border-color:#946ac580;
-  background:linear-gradient(125deg,#8451b912,transparent 65%),var(--panel)
-}
-.featured h3 {
-  font-size:clamp(52px,7vw,76px);
-  letter-spacing:-.055em;
-  margin:26px 0 14px
-}
-.project-top {
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap
-}
-.status {
-  color:var(--accent);
-  font-weight:400
-}
-.project h3 .status {
-  font-size:11px;
-  margin-left:12px
-}
-.lead {
-  font-size:22px;
-  max-width:650px
-}
-.features {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px 40px;
-  list-style:none;
-  padding:10px 0 24px;
-  color:var(--muted);
-  font-size:15px
-}
-.features li {
-  border-left:2px solid var(--line);
-  padding-left:16px
-}
-.tags {
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap
-}
-.tags span {
+.project-copy { min-width:0 }
+.project h3 { font-size:32px; margin:8px 0 16px }
+.featured { border-color:var(--accent) }
+.featured h3 { font-size:48px; letter-spacing:-.04em }
+.status { color:var(--accent); font-weight:500 }
+.lead { font-size:18px; margin:0 0 24px }
+.browser-frame {
+  align-self:start;
+  overflow:hidden;
   border:1px solid var(--line);
-  border-radius:4px;
-  padding:4px 9px;
-  font-size:10px
+  border-radius:8px;
+  background:var(--bg)
 }
-.private,.origin {
-  color:var(--muted)
+.browser-bar { display:flex; gap:8px; padding:16px; border-bottom:1px solid var(--line) }
+.browser-bar i { width:8px; height:8px; border-radius:50%; background:var(--muted); opacity:.65 }
+.browser-frame img { display:block; width:100%; height:auto }
+.project-links { gap:8px; margin-top:24px }
+.private { color:var(--muted); padding:8px; font-size:12px }
+.features { display:grid; gap:16px; padding:0 0 0 24px; margin:24px 0 0; color:var(--muted); font-size:16px }
+.tags { display:flex; flex-wrap:wrap; gap:8px }
+.tags span { border:1px solid var(--line); border-radius:4px; padding:4px 8px; font-size:11px }
+.origin { color:var(--muted); font-size:14px; margin:24px 0 0 }
+.project-details {
+  display:grid;
+  grid-template-rows:0fr;
+  visibility:hidden;
+  transition:grid-template-rows .3s ease,visibility .3s;
+  margin-top:-24px
 }
-.origin {
-  font-size:12px;
-  margin:24px 0 0
-}
-.when {
-  color:var(--muted)
+.project-details>div { overflow:hidden; min-height:0 }
+.project-details.is-open { grid-template-rows:1fr; visibility:visible }
+@media(min-width:900px) {
+  .featured { grid-template-columns:1.1fr 1fr; align-items:center; padding:32px; gap:32px }
+  .project-demo { grid-template-columns:1fr 1.2fr; align-items:center }
+  .project-details { grid-column:1/-1 }
+  .featured .project-details { margin-top:-32px }
+  .planned { max-width:760px }
 }
 .skill-groups {
   display:grid;
@@ -550,7 +525,8 @@ footer {
   }
   .top {
     top:10px;
-    gap:6px;
+    gap:0;
+    flex-wrap:wrap;
     min-height:56px;
     margin:10px -8px 0;
     padding:8px
@@ -564,14 +540,17 @@ footer {
     padding-left:0;
     border:0
   }
+  /* 40px deja caber correo, LinkedIn y GitHub en 360-390px sin quitar ningún botón. */
   .icono,.controls button {
-    width:34px;
-    min-width:34px;
-    height:34px
+    width:40px;
+    min-width:40px;
+    height:40px;
+    min-height:40px
   }
   .controls {
-    gap:4px
+    gap:2px
   }
+  .logo { min-width:40px; min-height:40px; justify-content:center }
   #menuBtn {
     display:grid
   }
@@ -606,7 +585,7 @@ footer {
   .hero {
     grid-template-columns:1fr;
     gap:40px;
-    padding:50px 0 70px;
+    padding:48px 0 64px;
     min-height:auto
   }
   .hero h1 {
@@ -641,7 +620,7 @@ footer {
     grid-template-columns:1fr
   }
   section {
-    padding:50px 0
+    padding:48px 0
   }
   footer {
     flex-direction:column;
@@ -651,8 +630,11 @@ footer {
     padding:22px
   }
   .project h3 {
-    font-size:24px
+    font-size:28px
   }
+  .featured h3 { font-size:40px }
+  .project { padding:16px }
+  .project .lead { font-size:17px }
   .btn {
     padding:12px 17px
   }
@@ -671,4 +653,15 @@ footer {
   .card {
     opacity:1!important
   }
+}
+
+.top nav a,.popover a { min-height:44px; display:flex; align-items:center }
+.contact-links .btn { overflow-wrap:anywhere; max-width:100% }
+@media(pointer:coarse) and (min-width:761px) {
+  .icono,.controls button { min-width:44px; min-height:44px }
+}
+@media(max-width:380px) {
+  .top { flex-wrap:nowrap; gap:2px }
+  .icono,.controls button,.logo { width:36px; min-width:36px; height:36px; min-height:36px }
+  .logo img { width:32px; height:32px }
 }
