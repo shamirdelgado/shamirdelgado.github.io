@@ -3,275 +3,212 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Shamir Delgado | Portafolio</title>
+    <title>Shamir Delgado | Full-stack junior · Web y 3D</title>
     <meta
-      name="description"
-      content="Portafolio de Shamir Delgado: desarrollo full-stack, proyectos web y reparación de hardware."
+    name="description"
+    content="Shamir Delgado, desarrollador full-stack junior en Costa Rica. Web y 3D. Disponible para trabajo remoto."
     />
+    <meta property="og:title" content="Shamir Delgado | Full-stack junior" />
+    <meta property="og:description" content="Productos web y experiencias 3D. Conoce Pokiot. Disponible para trabajo remoto." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shamirdelgado.github.io/" />
+    <meta property="og:image" content="https://shamirdelgado.github.io/img/icon.png" />
+    <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js"}}</script>
     <link rel="icon" href="img/icon.png" />
-
-    <!-- Aplica el tema antes del primer renderizado. -->
+    <!-- Evita un destello del tema equivocado al cargar. -->
     <script>
-      (() => {
-        let theme = null;
-        try {
-          theme = localStorage.getItem("tema");
-        } catch {
-          // El almacenamiento puede estar deshabilitado.
-        }
-        if (theme !== "day" && theme !== "night") {
-          theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "night"
-            : "day";
-        }
-        document.documentElement.dataset.theme = theme;
-      })();
-    </script>
-
+(() => {
+let theme = null;
+try {
+theme = localStorage.getItem("tema");
+} catch {
+// El almacenamiento puede estar deshabilitado.
+}
+if (theme !== "day" && theme !== "night") {
+theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+? "night"
+: "day";
+}
+document.documentElement.dataset.theme = theme;
+})();
+</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap"
-      rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="bg" id="bg" aria-hidden="true"></div>
-
+    <canvas id="universo" aria-hidden="true">
+    </canvas>
     <div class="wrap">
       <header class="top">
-        <a class="logo" href="#inicio" aria-label="Inicio">
-          <img src="img/icon.png" alt="Shamir" />
+        <a class="logo" href="#inicio" aria-label="Shamir Delgado">
+          <img src="img/icon.png" alt="" width="40" height="40"/>
+          <span>sd<span class="accent">.</span>
+        </span>
+      </a>
+      <div class="controls">
+        <button id="menuBtn" aria-expanded="false" aria-controls="menu" type="button">Menú</button>
+        <button id="langBtn" type="button" aria-label="Change language">EN</button>
+        <button id="themeBtn" type="button" role="switch" aria-checked="false" aria-label="Tema">
+          <img id="themeBall" src="img/honorball.png" width="24" height="24" alt=""/>
+        </button>
+      </div>
+      <nav id="menu" aria-label="Principal">
+        <a href="#proyectos">
+          <span data-es="Proyectos" data-en="Projects">Proyectos</span>
         </a>
-        <nav>
-          <a href="#proyectos" data-es="Proyectos" data-en="Projects">
-            Proyectos
-          </a>
-          <a href="#skills" data-es="Skills" data-en="Skills">Skills</a>
-          <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
-          <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
-          <button
-            class="lang"
-            id="langBtn"
-            type="button"
-            aria-label="Change language"
-          >
-            EN
-          </button>
-          <button
-            class="theme"
-            id="themeBtn"
-            type="button"
-            role="switch"
-            aria-checked="false"
-            aria-label="Tema día / noche"
-          >
-            <span class="knob" id="knob">
-              <img
-                id="themeBall"
-                src="img/honorball.png"
-                width="28"
-                height="28"
-                alt=""
-                aria-hidden="true"
-              />
-            </span>
-          </button>
-        </nav>
-      </header>
-
-      <main id="inicio">
-        <div class="hero">
-          <div>
-            <div class="hero-greeting">
-              <h1 data-es="Hola, soy Shamir." data-en="Hi, I'm Shamir.">
-                Hola, soy Shamir.
-              </h1>
-              <picture class="greeting-pokemon" aria-hidden="true">
-                <source
-                  media="(prefers-reduced-motion: reduce)"
-                  srcset="img/gastly1.png"
-                />
-                <img
-                  src="img/tres-evoluciones.gif"
-                  alt=""
-                  width="100"
-                  height="106"
-                />
-              </picture>
-            </div>
-            <p
-              data-es="Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo proyectos web y sigo ampliando mis conocimientos en interfaces, APIs y bases de datos."
-              data-en="Systems Engineering student from Costa Rica. I build web projects and continue developing my knowledge of interfaces, APIs and databases."
-            >
-              Estudiante de Ingeniería de Sistemas en Costa Rica. Desarrollo
-              proyectos web y sigo ampliando mis conocimientos en interfaces,
-              APIs y bases de datos.
-            </p>
-            <p
-              class="now"
-              data-es="Junior Full-Stack Developer · Desarrollo web y reparación de hardware."
-              data-en="Junior Full-Stack Developer · Web development and hardware repair."
-            >
-              Junior Full-Stack Developer · Desarrollo web y reparación de
-              hardware.
-            </p>
-            <a
-              class="btn primary"
-              href="#proyectos"
-              data-es="Ver mis proyectos"
-              data-en="See my projects"
-            >
-              Ver mis proyectos
+        <a href="#skills">
+          <span data-es="Skills" data-en="Skills">Skills</span>
+        </a>
+        <a href="#sobre-mi">
+          <span data-es="Sobre mí" data-en="About">Sobre mí</span>
+        </a>
+        <a href="#contacto">
+          <span data-es="Contacto" data-en="Contact">Contacto</span>
+        </a>
+      </nav>
+    </header>
+    <main id="inicio">
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">~/shamir-delgado</div>
+          <p class="availability" data-es="● Disponible para trabajo remoto" data-en="● Available for remote work">● Disponible para trabajo remoto</p>
+          <h1>Shamir<br/>Delgado<span class="accent">.</span>
+          </h1>
+          <p class="role" data-es="Desarrollador full-stack junior · Web y 3D" data-en="Junior full-stack developer · Web &amp; 3D">Desarrollador full-stack junior · Web y 3D</p>
+          <p data-es="Construyo productos web completos, de la base de datos a la interfaz en 3D. Diseño la arquitectura, escribo y reviso el código." data-en="I build complete web products, from the database to the 3D interface. I design the architecture, write and review the code.">Construyo productos web completos, de la base de datos a la interfaz en 3D. Diseño la arquitectura, escribo y reviso el código.</p>
+          <div class="actions">
+            <a class="btn primary" href="#pokiot">
+              <span data-es="Ver Pokiot ↗" data-en="Explore Pokiot ↗">Ver Pokiot ↗</span>
             </a>
-            <a
-              class="btn ghost"
-              href="#contacto"
-              data-es="Contactame"
-              data-en="Get in touch"
-            >
-              Contactame
+            <a class="btn ghost" href="#contacto">
+              <span data-es="Contacto" data-en="Contact">Contacto</span>
             </a>
           </div>
-
-          <div class="card-stage">
-            <div class="card" id="card">
-              <div class="card-inner">
-                <div class="card-head">
-                  <strong>Shamir</strong>
-                  <span>Systems Eng.</span>
-                </div>
-                <div class="art"><img src="img/icon.png" alt="Shamir" /></div>
-                <ul class="stats">
-                  <li>
-                    <span data-es="Lenguajes" data-en="Languages">
-                      Lenguajes
-                    </span>
-                    <span>Python, JS, C#</span>
-                  </li>
-                  <li>
-                    <span data-es="Web" data-en="Web">Web</span>
-                    <span>HTML, CSS, JS</span>
-                  </li>
-                  <li>
-                    <span data-es="Idiomas" data-en="Spoken">Idiomas</span>
-                    <span>ES, EN</span>
-                  </li>
-                </ul>
-                <div class="card-foot">
-                  <span>Costa Rica</span>
-                  <span class="card-pokemon" aria-hidden="true">
-                    <img
-                      class="spin-animated"
-                      src="img/haunter-spin.gif"
-                      alt=""
-                      width="44"
-                      height="44"
-                    />
-                    <span class="spin-static pose-window pose-haunter">
-                      <img src="img/pokemon-poses.jpg" alt="" />
-                    </span>
-                  </span>
-                  <span aria-hidden="true"></span>
-                </div>
+        </div>
+        <div class="card-stage">
+          <div id="card" class="card">
+            <div class="card-inner">
+              <div class="card-head">
+                <strong>Shamir</strong>
+                <span>DEV / 001</span>
+              </div>
+              <div class="art">
+                <img src="img/icon.png" alt="Gengar" width="160" height="160"/>
+              </div>
+              <ul class="stats">
+                <li>
+                  <span>Stack</span>
+                  <span>React, Three.js, Python</span>
+                </li>
+                <li>
+                  <span data-es="Datos" data-en="Data">Datos</span>
+                  <span>PostgreSQL, Supabase</span>
+                </li>
+                <li>
+                  <span>Infra</span>
+                  <span>GitHub Actions, Vercel</span>
+                </li>
+              </ul>
+              <div class="card-foot">
+                <span data-es="Costa Rica · Remoto" data-en="Costa Rica · Remote">Costa Rica · Remoto</span>
+                <img src="img/gastly1.png" alt="" width="36" height="36"/>
               </div>
             </div>
           </div>
         </div>
-
-        <section id="proyectos">
-          <h2 data-es="Proyectos" data-en="Projects">Proyectos</h2>
-
-          <article class="project">
-            <div
-              class="when"
-              data-es="2026, en progreso"
-              data-en="2026, in progress"
-            >
-              2026, en progreso
-            </div>
-            <div>
-              <h3>
-                <span
-                  data-es="Tracker de cartas Pokémon"
-                  data-en="Pokémon card tracker"
-                >Tracker de cartas Pokémon</span>
-                <span
-                  class="status"
-                  data-es="En progreso"
-                  data-en="In progress"
-                >
-                  En progreso
-                </span>
-              </h3>
-              <p
-                data-es="App para registrar mi colección de cartas, con base de datos. Ahora funciona en consola; sigue una API de cartas y una versión web para celular."
-                data-en="App to track my card collection, backed by a database. It runs in the console for now; next come a cards API and a mobile-friendly web version."
+      </div>
+      <section id="proyectos">
+        <h2 data-es="01 / Proyectos" data-en="01 / Projects">01 / Proyectos</h2>
+        <article id="pokiot" class="project featured">
+          <div class="project-top">
+            <span class="eyebrow">01 — FULL-STACK / 3D</span>
+            <span class="status" data-es="Proyecto destacado" data-en="Featured project">Proyecto destacado</span>
+          </div>
+          <h3>Pokiot<span class="accent"> ↗</span>
+          </h3>
+          <p class="lead" data-es="Un rastreador digital de cartas Pokémon con una experiencia inmersiva." data-en="A digital Pokémon card tracker with an immersive experience.">Un rastreador digital de cartas Pokémon con una experiencia inmersiva.</p>
+          <ul class="features">
+            <li data-es="Universo 3D de partículas con shaders propios en Three.js. Este fondo viene de ahí." data-en="3D particle universe with custom Three.js shaders. This background comes from it.">Universo 3D de partículas con shaders propios en Three.js. Este fondo viene de ahí.</li>
+            <li data-es="Carta del día y familias evolutivas en 3D, generadas a diario por un pipeline en Python con GitHub Actions y despliegue continuo en Vercel." data-en="Daily card and 3D evolution families, generated every day by a Python pipeline with GitHub Actions and continuous deployment on Vercel.">Carta del día y familias evolutivas en 3D, generadas a diario por un pipeline en Python con GitHub Actions y despliegue continuo en Vercel.</li>
+            <li data-es="Escáner en el navegador: OCR con Tesseract.js y huella perceptual dHash para reconocer cartas físicas. Nada sale del dispositivo." data-en="Browser card scanner: Tesseract.js OCR and dHash perceptual hashing recognize physical cards. Nothing leaves the device.">Escáner en el navegador: OCR con Tesseract.js y huella perceptual dHash para reconocer cartas físicas. Nada sale del dispositivo.</li>
+            <li data-es="Cuentas con Supabase: PostgreSQL, Row Level Security y funciones seguras. Valor de la colección con historial de precios." data-en="Supabase accounts: PostgreSQL, Row Level Security and secure functions. Collection value with price history.">Cuentas con Supabase: PostgreSQL, Row Level Security y funciones seguras. Valor de la colección con historial de precios.</li>
+            <li data-es="9 regiones jugables en pixel art donde caminas como tu Pokémon." data-en="9 playable pixel art regions where you walk as your Pokémon.">9 regiones jugables en pixel art donde caminas como tu Pokémon.</li>
+            <li data-es="Diseño, arquitectura y revisión propios. Cada cambio pasa por pruebas, lint y verificación visual automatizada." data-en="My own design, architecture and review. Every change goes through tests, lint and automated visual checks.">Diseño, arquitectura y revisión propios. Cada cambio pasa por pruebas, lint y verificación visual automatizada.</li>
+          </ul>
+          <div class="tags">
+            <span>React 19</span>
+            <span>Vite</span>
+            <span>Three.js</span>
+            <span>GSAP</span>
+            <span>Python</span>
+            <span>Supabase / PostgreSQL</span>
+            <span>GitHub Actions</span>
+            <span>Vercel</span>
+          </div>
+          <div class="project-links">
+            <a class="btn primary" href="https://pokiot.vercel.app" target="_blank" rel="noopener noreferrer">
+              <span data-es="Ver en vivo ↗" data-en="View live ↗">Ver en vivo ↗</span>
+            </a>
+            <span class="private" data-es="Código privado" data-en="Private source">Código privado</span>
+          </div>
+          <p class="origin" data-es="Empezó como una app de consola en Python + SQLite." data-en="It started as a Python + SQLite console app.">Empezó como una app de consola en Python + SQLite.</p>
+        </article>
+        <article class="project">
+          <div class="when" data-es="2026" data-en="2026">2026</div>
+          <div>
+            <h3>
+              <span data-es="Courier Demo" data-en="Courier Demo">Courier Demo</span>
+              <span class="status" data-es="Demo" data-en="Demo">Demo</span>
+            </h3>
+            <p
+              data-es="Demo de un casillero de compras con envíos de EE. UU. a Costa Rica. Incluye cotizador, prealerta, rastreo y panel de usuario con datos y funciones simulados."
+              data-en="Demo of a shopping forwarding service from the US to Costa Rica. Includes a shipping estimator, package pre-alerts, tracking and a user dashboard with simulated data and features."
               >
-                App para registrar mi colección de cartas, con base de datos.
-                Ahora funciona en consola; sigue una API de cartas y una versión
-                web para celular.
-              </p>
-              <div class="tags">
-                <span>Python</span>
-                <span>SQLite</span>
-              </div>
+              Demo de un casillero de compras con envíos de EE. UU. a Costa
+              Rica. Incluye cotizador, prealerta, rastreo y panel de usuario
+              con datos y funciones simulados.
+            </p>
+            <div class="tags">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
             </div>
-          </article>
-
-          <article class="project">
-            <div class="when" data-es="2026" data-en="2026">2026</div>
-            <div>
-              <h3>
-                <span data-es="Courier Demo" data-en="Courier Demo">Courier Demo</span>
-                <span class="status" data-es="Demo" data-en="Demo">Demo</span>
-              </h3>
-              <p
-                data-es="Demo de un casillero de compras con envíos de EE. UU. a Costa Rica. Incluye cotizador, prealerta, rastreo y panel de usuario con datos y funciones simulados."
-                data-en="Demo of a shopping forwarding service from the US to Costa Rica. Includes a shipping estimator, package pre-alerts, tracking and a user dashboard with simulated data and features."
-              >
-                Demo de un casillero de compras con envíos de EE. UU. a Costa
-                Rica. Incluye cotizador, prealerta, rastreo y panel de usuario
-                con datos y funciones simulados.
-              </p>
-              <div class="tags">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>JavaScript</span>
-              </div>
-              <p class="project-links">
-                <a
-                  class="btn primary"
-                  href="https://shamirdelgado.github.io/courier-demo/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-es="Ver demo"
-                  data-en="View demo"
+            <p class="project-links">
+              <a
+                class="btn primary"
+                href="https://shamirdelgado.github.io/courier-demo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-es="Ver demo"
+                data-en="View demo"
                 >
-                  Ver demo
-                </a>
-                <a
-                  class="btn ghost"
-                  href="https://github.com/shamirdelgado/courier-demo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-es="Ver código"
-                  data-en="View code"
+                Ver demo
+              </a>
+              <a
+                class="btn ghost"
+                href="https://github.com/shamirdelgado/courier-demo"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-es="Ver código"
+                data-en="View code"
                 >
-                  Ver código
-                </a>
-              </p>
-            </div>
-          </article>
-
-          <article class="project">
-            <div class="when">2026</div>
-            <div>
-              <h3>
-                <span
-                  data-es="Gestor de finanzas personales"
-                  data-en="Personal finance manager"
+                Ver código
+              </a>
+            </p>
+          </div>
+        </article>
+        <article class="project">
+          <div class="when">2026</div>
+          <div>
+            <h3>
+              <span
+                data-es="Gestor de finanzas personales"
+                data-en="Personal finance manager"
                 >Gestor de finanzas personales</span>
                 <span class="status" data-es="Planificado" data-en="Planned">
                   Planificado
@@ -280,7 +217,7 @@
               <p
                 data-es="Proyecto planificado para organizar ingresos y gastos, definir presupuestos y consultar un resumen mensual con gráficos, filtros por fecha y exportación a CSV."
                 data-en="Planned project to organize income and expenses, set budgets and view a monthly summary with charts, date filters and CSV export."
-              >
+                >
                 Proyecto planificado para organizar ingresos y gastos, definir
                 presupuestos y consultar un resumen mensual con gráficos,
                 filtros por fecha y exportación a CSV.
@@ -295,314 +232,130 @@
             </div>
           </article>
         </section>
-
         <section id="skills">
-          <h2 data-es="Skills" data-en="Skills">Skills</h2>
-          <div class="skills tags">
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg"
-                alt="Python"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Python</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/sqlite/sqlite-original.svg"
-                alt="SQLite"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>SQLite</b>
-            </span>
-            <span>
-              <span class="skill-logos">
-                <img
-                  class="skill-logo"
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg"
-                  alt="HTML"
-                  loading="lazy"
-                  width="28"
-                  height="28"
-                />
-                <img
-                  class="skill-logo"
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg"
-                  alt="CSS"
-                  loading="lazy"
-                  width="28"
-                  height="28"
-                />
-                <img
-                  class="skill-logo"
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg"
-                  alt="JavaScript"
-                  loading="lazy"
-                  width="28"
-                  height="28"
-                />
-              </span>
-              <b>HTML, CSS, JS</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/csharp/csharp-original.svg"
-                alt="C#"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>C#</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg"
-                alt="TypeScript"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>TypeScript</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg"
-                alt="React"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>React</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg"
-                alt="FastAPI"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>FastAPI</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg"
-                alt="PostgreSQL"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>PostgreSQL</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg"
-                alt="SQL"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>SQL</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg"
-                alt="Git"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Git</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg"
-                alt="GitHub"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>GitHub</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
-                alt="AWS"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>AWS</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg"
-                alt="Docker"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Docker</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/playwright/playwright-original.svg"
-                alt="Playwright"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Playwright</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/pytest/pytest-original.svg"
-                alt="Pytest"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Pytest</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg"
-                alt="GitHub Actions"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>GitHub Actions</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postman/postman-original.svg"
-                alt="Postman"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Postman</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg"
-                alt="Linux"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Linux</b>
-            </span>
-            <span tabindex="0">
-              <img
-                class="skill-logo"
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/figma/figma-original.svg"
-                alt="Figma"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b>Figma</b>
-            </span>
-            <span class="hardware-skill" tabindex="0">
-              <img
-                class="skill-logo"
-                src="img/hardware/celulares.svg"
-                alt="Reparación de celulares"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b data-es="Celulares" data-en="Phones">Celulares</b>
-            </span>
-            <span class="hardware-skill" tabindex="0">
-              <img
-                class="skill-logo"
-                src="img/hardware/computadoras.svg"
-                alt="Reparación de computadoras"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b data-es="Computadoras" data-en="Computers">Computadoras</b>
-            </span>
-            <span class="hardware-skill" tabindex="0">
-              <img
-                class="skill-logo"
-                src="img/hardware/consolas.svg"
-                alt="Reparación de consolas"
-                loading="lazy"
-                width="28"
-                height="28"
-              />
-              <b data-es="Consolas" data-en="Consoles">Consolas</b>
-            </span>
+          <h2 data-es="02 / Skills" data-en="02 / Skills">02 / Skills</h2>
+          <div class="skill-groups">
+            <div class="skill-group">
+              <h3 data-es="Frontend" data-en="Frontend">Frontend</h3>
+              <div class="skills">
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>JavaScript</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>TypeScript</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>React</b>
+                </span>
+                <span>
+                  <b>Three.js/WebGL</b>
+                </span>
+                <span>
+                  <b>GSAP</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>HTML</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>CSS</b>
+                </span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h3 data-es="Backend y datos" data-en="Backend &amp; data">Backend y datos</h3>
+              <div class="skills">
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>Python</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>FastAPI</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>SQL</b>
+                </span>
+                <span>
+                  <b>PostgreSQL</b>
+                </span>
+                <span>
+                  <b>Supabase</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/sqlite/sqlite-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>SQLite</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/csharp/csharp-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>C#/.NET</b>
+                </span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h3 data-es="Desarrollo" data-en="Development">Desarrollo</h3>
+              <div class="skills">
+                <span>
+                  <b data-es="diseño de software" data-en="software design">diseño de software</b>
+                </span>
+                <span>
+                  <b data-es="arquitectura" data-en="architecture">arquitectura</b>
+                </span>
+                <span>
+                  <b data-es="revisión de código" data-en="code review">revisión de código</b>
+                </span>
+                <span>
+                  <b data-es="planificación" data-en="planning">planificación</b>
+                </span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h3 data-es="Herramientas" data-en="Tools">Herramientas</h3>
+              <div class="skills">
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>Git</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>GitHub</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>GitHub Actions</b>
+                </span>
+                <span>
+                  <b>Vercel</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>Linux</b>
+                </span>
+                <span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width="22" height="22" alt="" loading="lazy"/>
+                  <b>AWS</b>
+                </span>
+              </div>
+            </div>
           </div>
         </section>
-
         <section id="sobre-mi">
-          <div class="about-heading">
-            <h2 data-es="Sobre mí" data-en="About me">Sobre mí</h2>
-            <picture aria-hidden="true">
-              <source
-                media="(prefers-reduced-motion: reduce)"
-                srcset="img/gengar1.png"
-              />
-              <img
-                src="img/sobre-mi-shiny.gif"
-                alt=""
-                width="60"
-                height="60"
-                loading="lazy"
-              />
-            </picture>
-          </div>
+          <h2 data-es="03 / Sobre mí" data-en="03 / About me">03 / Sobre mí</h2>
           <div class="about">
-            <p
-              data-es="Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi enfoque es conectar interfaces, lógica de aplicación y bases de datos para desarrollar soluciones web completas."
-              data-en="I am Shamir Delgado, a Junior Full-Stack Developer studying Systems Engineering at Universidad Latina de Costa Rica. My focus is connecting interfaces, application logic and databases to build complete web solutions."
-            >
-              Soy Shamir Delgado, Junior Full-Stack Developer y estudiante de
-              Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Mi
-              enfoque es conectar interfaces, lógica de aplicación y bases de
-              datos para desarrollar soluciones web completas.
-            </p>
-            <p
-              data-es="También tengo experiencia real en reparación de celulares, computadoras y consolas. El diagnóstico de fallas y el trabajo con hardware forman parte de mis conocimientos técnicos y de mi manera de resolver problemas."
-              data-en="I also have hands-on experience repairing phones, computers and consoles. Troubleshooting and working with hardware are part of my technical skills and approach to solving problems."
-            >
-              También tengo experiencia real en reparación de celulares,
-              computadoras y consolas. El diagnóstico de fallas y el trabajo con
-              hardware forman parte de mis conocimientos técnicos y de mi manera
-              de resolver problemas.
-            </p>
+            <p data-es="Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Me interesa conectar interfaces, lógica y datos para construir productos completos." data-en="I study Systems Engineering at Universidad Latina de Costa Rica. I enjoy connecting interfaces, logic and data to build complete products.">Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica. Me interesa conectar interfaces, lógica y datos para construir productos completos.</p>
+            <p data-es="Mi experiencia previa en logística y procesos aduaneros me enseñó a trabajar con orden y procesos claros." data-en="My previous experience in logistics and customs procedures taught me to work with structure and clear processes.">Mi experiencia previa en logística y procesos aduaneros me enseñó a trabajar con orden y procesos claros.</p>
+            <p data-es="Reparar celulares, consolas y computadoras fue el origen de mi forma de diagnosticar y depurar problemas." data-en="Repairing phones, consoles and computers shaped the way I diagnose and debug problems.">Reparar celulares, consolas y computadoras fue el origen de mi forma de diagnosticar y depurar problemas.</p>
+            <p data-es="Busco trabajo remoto en desarrollo de software." data-en="I am looking for remote work in software development.">Busco trabajo remoto en desarrollo de software.</p>
           </div>
         </section>
-
         <section id="contacto">
-          <h2 data-es="Contacto" data-en="Get in touch">Contacto</h2>
+          <h2 data-es="04 / Contacto" data-en="04 / Contact">04 / Contacto</h2>
+          <p class="contact-title" data-es="¿Construimos algo?" data-en="Let’s build something.">¿Construimos algo?</p>
           <div class="contact-links">
             <a class="btn primary" href="mailto:uzziellanuza@gmail.com">
               <svg
@@ -616,7 +369,7 @@
                 stroke-width="1.8"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-              >
+                >
                 <rect x="2" y="4" width="20" height="16" rx="3" />
                 <path d="m3 6 9 7 9-7" />
               </svg>
@@ -624,85 +377,40 @@
             </a>
             <a class="btn ghost" href="https://github.com/shamirdelgado">
               <img
-                class="contact-icon logo-badge"
-                src="img/contacto/github.svg"
-                alt=""
-                width="18"
-                height="18"
-                loading="lazy"
+              class="contact-icon logo-badge"
+              src="img/contacto/github.svg"
+              alt=""
+              width="18"
+              height="18"
+              loading="lazy"
               />
               GitHub
             </a>
             <a
               class="btn ghost"
               href="https://www.linkedin.com/in/shamir-delgado-lanuza-0b7274314"
-            >
+              >
               <img
-                class="contact-icon logo-badge"
-                src="img/contacto/linkedin.svg"
-                alt=""
-                width="18"
-                height="18"
-                loading="lazy"
+              class="contact-icon logo-badge"
+              src="img/contacto/linkedin.svg"
+              alt=""
+              width="18"
+              height="18"
+              loading="lazy"
               />
               LinkedIn
             </a>
           </div>
         </section>
       </main>
-
       <footer>
-        <picture class="footer-pokemon" aria-hidden="true">
-          <source
-            media="(prefers-reduced-motion: reduce)"
-            srcset="img/gengar1.png"
-          />
-          <img
-            src="img/gengar-footer.gif"
-            alt=""
-            width="72"
-            height="81"
-            loading="lazy"
-          />
-        </picture>
-        <span
-          data-es="Hecho a mano con HTML, CSS y JavaScript."
-          data-en="Handmade with HTML, CSS and JavaScript."
-        >
-          Hecho a mano con HTML, CSS y JavaScript.
-        </span>
+        <span>© Shamir Delgado</span>
+        <span data-es="Hecho a mano con HTML, CSS y JavaScript." data-en="Handmade with HTML, CSS and JavaScript.">Hecho a mano con HTML, CSS y JavaScript.</span>
       </footer>
     </div>
-
-    <!-- Transparencia de las poses y del cursor sin modificar las imágenes. -->
-    <svg
-      width="0"
-      height="0"
-      aria-hidden="true"
-      focusable="false"
-      style="position: absolute"
-    >
-      <defs>
-        <filter id="pokemon-remove-black" color-interpolation-filters="sRGB">
-          <feColorMatrix
-            type="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  1 1 1 0 0"
-          />
-          <feComponentTransfer>
-            <feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1" />
-          </feComponentTransfer>
-        </filter>
-        <filter id="pokemon-remove-white" color-interpolation-filters="sRGB">
-          <feColorMatrix
-            type="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 3 0"
-          />
-          <feComponentTransfer>
-            <feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1" />
-          </feComponentTransfer>
-        </filter>
-      </defs>
-    </svg>
-    <script src="script.js"></script>
+    <script src="script.js">
+</script>
+    <script type="module" src="universo.js">
+</script>
   </body>
 </html>
