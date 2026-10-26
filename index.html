@@ -43,6 +43,11 @@
         "addressLocality": "San José",
         "addressCountry": "CR"
       },
+      "alumniOf": [
+        { "@type": "CollegeOrUniversity", "name": "Universidad Latina de Costa Rica" },
+        { "@type": "CollegeOrUniversity", "name": "Universidad Fidélitas" }
+      ],
+      "knowsLanguage": ["es", "en", "pt"],
       "knowsAbout": [
         "JavaScript",
         "TypeScript",
@@ -125,6 +130,7 @@ document.documentElement.dataset.theme = theme;
           <a href="#proyectos"><span data-es="Proyectos" data-en="Projects">Proyectos</span></a>
           <a href="#skills"><span data-es="Skills" data-en="Skills">Skills</span></a>
           <a href="#sobre-mi"><span data-es="Sobre mí" data-en="About">Sobre mí</span></a>
+          <a href="#trayectoria"><span data-es="Trayectoria" data-en="Journey">Trayectoria</span></a>
           <a href="#contacto"><span data-es="Contacto" data-en="Contact">Contacto</span></a>
         </nav>
         <div class="atajos">
@@ -417,12 +423,103 @@ document.documentElement.dataset.theme = theme;
           <div class="about">
             <p  data-es="Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica." data-en="I study Systems Engineering at Universidad Latina de Costa Rica.">Estudio Ingeniería de Sistemas en la Universidad Latina de Costa Rica.</p>
             <p  data-es="Conecto interfaces, lógica y datos para construir productos completos." data-en="I connect interfaces, logic and data to build complete products.">Conecto interfaces, lógica y datos para construir productos completos.</p>
-            <p data-es="Español (nativo) · Inglés (B2)" data-en="Spanish (native) · English (B2)">Español (nativo) · Inglés (B2)</p>
+            <p data-es="Español (nativo) · Inglés (B2) · Portugués (intermedio)" data-en="Spanish (native) · English (B2) · Portuguese (intermediate)">Español (nativo) · Inglés (B2) · Portugués (intermedio)</p>
           </div>
         </section>
-        <section id="trayectoria" hidden></section>
+        <section id="trayectoria" aria-labelledby="journey-title">
+          <h2 id="journey-title" data-es="05 / Trayectoria" data-en="05 / Journey">05 / Trayectoria</h2>
+          <ul class="journey-legend">
+            <li class="journey-education"><i aria-hidden="true"></i><span data-es="Formación" data-en="Education">Formación</span></li>
+            <li class="journey-work"><i aria-hidden="true"></i><span data-es="Trabajo" data-en="Work">Trabajo</span></li>
+            <li class="journey-project"><i aria-hidden="true"></i><span data-es="Proyecto" data-en="Project">Proyecto</span></li>
+          </ul>
+          <div class="journey">
+            <div class="journey-track" aria-hidden="true"><div class="journey-progress"></div><span class="journey-tip"></span></div>
+            <ol class="journey-list">
+              <li class="journey-item journey-education">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="dic 2023" data-en="Dec 2023">dic 2023</p>
+                  <span class="journey-type" data-es="Formación" data-en="Education">Formación</span>
+                  <h3><span data-es="Técnico intermedio en reparación de celulares" data-en="Intermediate technician in phone repair">Técnico intermedio en reparación de celulares</span></h3>
+                  <p class="journey-place">Awápaz Aprendizaje</p>
+                  <p class="journey-description" data-es="Diagnóstico y reparación de hardware de celulares." data-en="Phone hardware diagnosis and repair.">Diagnóstico y reparación de hardware de celulares.</p>
+                </article>
+              </li>
+              <li class="journey-item journey-education">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="may 2024" data-en="May 2024">may 2024</p>
+                  <span class="journey-type" data-es="Formación" data-en="Education">Formación</span>
+                  <h3><span data-es="Técnico en reparación de software de celulares" data-en="Technician in phone software repair">Técnico en reparación de software de celulares</span></h3>
+                  <p class="journey-place">Awápaz Aprendizaje</p>
+                  <p class="journey-description" data-es="Instalación, restauración y recuperación de sistemas." data-en="System installation, restoration and recovery.">Instalación, restauración y recuperación de sistemas.</p>
+                </article>
+              </li>
+              <li class="journey-item journey-work">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="sep 2024 – sep 2025" data-en="Sep 2024 – Sep 2025">sep 2024 – sep 2025</p>
+                  <span class="journey-type" data-es="Trabajo" data-en="Work">Trabajo</span>
+                  <h3><span data-es="Auxiliar de inventarios y logística" data-en="Inventory &amp; logistics assistant">Auxiliar de inventarios y logística</span></h3>
+                  <p class="journey-place">Grupo Castro Fallas</p>
+                  <p class="journey-description" data-es="Inventarios en sistemas digitales y nacionalización de mercancía (DUAs)." data-en="Digital inventory systems and customs clearance (DUAs).">Inventarios en sistemas digitales y nacionalización de mercancía (DUAs).</p>
+                </article>
+              </li>
+              <li class="journey-item journey-work">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="sep – dic 2024" data-en="Sep – Dec 2024">sep – dic 2024</p>
+                  <span class="journey-type" data-es="Trabajo" data-en="Work">Trabajo</span>
+                  <h3><span data-es="Práctica profesional" data-en="Internship">Práctica profesional</span></h3>
+                  <p class="journey-place">CargaloTodo USA</p>
+                  <p class="journey-description" data-es="Desarrollo y mantenimiento del sitio web corporativo (HTML, CSS, JavaScript) y reportes logísticos." data-en="Built and maintained the corporate website (HTML, CSS, JavaScript) and logistics reports.">Desarrollo y mantenimiento del sitio web corporativo (HTML, CSS, JavaScript) y reportes logísticos.</p>
+                </article>
+              </li>
+              <li class="journey-item journey-education">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="fin 2024" data-en="Late 2024">fin 2024</p>
+                  <span class="journey-type" data-es="Formación" data-en="Education">Formación</span>
+                  <h3><span data-es="Ingeniería en Sistemas" data-en="Systems Engineering">Ingeniería en Sistemas</span></h3>
+                  <p class="journey-place">Universidad Fidélitas</p>
+                  <p class="journey-description" data-es="Inicio de la carrera." data-en="Started the degree.">Inicio de la carrera.</p>
+                </article>
+              </li>
+              <li class="journey-item journey-education">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="2026" data-en="2026">2026</p>
+                  <span class="journey-type" data-es="Formación" data-en="Education">Formación</span>
+                  <h3><span data-es="Ingeniería en Sistemas" data-en="Systems Engineering">Ingeniería en Sistemas</span></h3>
+                  <p class="journey-place">Universidad Latina de Costa Rica</p>
+                  <p class="journey-description" data-es="Traslado; en curso." data-en="Transferred; in progress.">Traslado; en curso.</p>
+                </article>
+              </li>
+              <li class="journey-item journey-work">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="2026" data-en="2026">2026</p>
+                  <span class="journey-type" data-es="Trabajo" data-en="Work">Trabajo</span>
+                  <h3><span data-es="Hardware y software de dispositivos" data-en="Device hardware &amp; software">Hardware y software de dispositivos</span></h3>
+                  <p class="journey-place">Awápaz</p>
+                  <p class="journey-description" data-es="Diagnóstico a nivel de componente, microsoldadura, mediciones de voltaje y corriente, instalación y restauración de sistemas." data-en="Component-level diagnosis, micro-soldering, voltage and current measurements, OS installation and restoration.">Diagnóstico a nivel de componente, microsoldadura, mediciones de voltaje y corriente, instalación y restauración de sistemas.</p>
+                </article>
+              </li>
+              <li class="journey-item journey-project">
+                <span class="journey-node" aria-hidden="true"></span>
+                <article class="journey-card">
+                  <p class="journey-date" data-es="2026" data-en="2026">2026</p>
+                  <span class="journey-type" data-es="Proyecto" data-en="Project">Proyecto</span>
+                  <h3><a href="#pokiot"><span data-es="Pokiot" data-en="Pokiot">Pokiot</span></a></h3>
+                  <p class="journey-description" data-es="Rastreador de cartas con experiencia 3D, de la base de datos a la interfaz." data-en="Card tracker with a 3D experience, from database to interface.">Rastreador de cartas con experiencia 3D, de la base de datos a la interfaz.</p>
+                </article>
+              </li>
+            </ol>
+          </div>
+        </section>
         <section id="contacto">
-          <h2 data-es="05 / Contacto" data-en="05 / Contact">05 / Contacto</h2>
+          <h2 data-es="06 / Contacto" data-en="06 / Contact">06 / Contacto</h2>
           <p class="contact-title" data-es="¿Construimos algo?" data-en="Let’s build something.">¿Construimos algo?</p>
           <div class="contact-links">
             <a class="btn primary" href="mailto:uzziellanuza@gmail.com">

@@ -106,6 +106,51 @@
   });
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const journey = document.querySelector('.journey');
+  const journeyItems = [...journey.querySelectorAll('.journey-item')];
+  const journeyNodes = journeyItems.map((item) => item.querySelector('.journey-node'));
+  let journeyFrame = 0;
+
+  function updateJourney() {
+    journeyFrame = 0;
+    if (reducedMotion.matches) {
+      journey.classList.remove('is-animated');
+      journey.style.removeProperty('--journey-progress');
+      journey.style.removeProperty('--journey-distance');
+      return;
+    }
+
+    // Todas las medidas se leen antes de cambiar estilos.
+    const bounds = journey.getBoundingClientRect();
+    const nodePositions = journeyNodes.map((node) => {
+      const rect = node.getBoundingClientRect();
+      return rect.top + rect.height / 2 - bounds.top;
+    });
+    const distance = Math.max(0, Math.min(bounds.height, window.innerHeight * 0.78 - bounds.top));
+    const progress = bounds.height ? distance / bounds.height : 0;
+
+    journey.style.setProperty('--journey-progress', progress);
+    journey.style.setProperty('--journey-distance', distance + 'px');
+    journey.classList.add('is-animated');
+    journeyItems.forEach((item, index) => {
+      if (distance >= nodePositions[index]) item.classList.add('is-reached');
+    });
+  }
+
+  function scheduleJourney() {
+    if (!journeyFrame) journeyFrame = requestAnimationFrame(updateJourney);
+  }
+
+  window.addEventListener('scroll', scheduleJourney, { passive: true });
+  window.addEventListener('resize', scheduleJourney);
+  reducedMotion.addEventListener('change', scheduleJourney);
+  if ('ResizeObserver' in window) {
+    const journeyResize = new ResizeObserver(scheduleJourney);
+    journeyResize.observe(document.querySelector('main'));
+  }
+  document.fonts?.ready.then(scheduleJourney);
+  scheduleJourney();
+
   const countValues = new WeakMap();
   const countFrames = new Map();
 
