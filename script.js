@@ -221,4 +221,7 @@
   const markBar = () => bar.classList.toggle('flotando', window.scrollY > 24);
   window.addEventListener('scroll', markBar, { passive: true });
   markBar();
+
+  // Al volver de la oficina se respeta el idioma elegido allá.
+  if (new URLSearchParams(window.location.search).get('lang') === 'en') setLanguage('en');
 })();
